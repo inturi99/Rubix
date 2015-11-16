@@ -1,0 +1,39 @@
+{
+  "name": "vex",
+  "version": "2.3.2",
+  "homepage": "http://github.hubspot.com/vex/docs/welcome",
+  "authors": [
+    "Adam Schwartz <aschwartz@hubspot.com>"
+  ],
+  "description": "Beautiful, functional, dialogs in Javascript",
+  "main": [
+    "css/*",
+    "js/*.js"
+  ],
+  "keywords": [
+    "dialog",
+    "modal",
+    "client-side",
+    "javascript",
+    "css",
+    "themes",
+    "alert",
+    "confirm",
+    "prompt"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "_release": "2.3.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.3.2",
+    "commit": "3334f39f89b9cbc0f37f649489a40d4e9f86bcc5"
+  },
+  "_source": "git://github.com/HubSpot/vex.git",
+  "_target": "~2.3.2",
+  "_originalSource": "vex",
+  "_direct": true
+}

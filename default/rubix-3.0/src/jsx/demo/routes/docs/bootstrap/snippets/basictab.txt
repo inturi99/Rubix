@@ -1,0 +1,37 @@
+class Demo extends React.Component {
+  handleSelect(itemprops) {
+    alert(itemprops.pane);
+  }
+  render() {
+    return (
+      <TabContainer>
+        <TabList bsStyle='orange75' onTabSelect={this.handleSelect}>
+          <Tab pane='tab1' active>Home</Tab>
+          <Tab pane='tab2'>Profile</Tab>
+          <TabDropdown title='Dropdown' menu-props={{bsStyle: 'orange75'}}>
+            <Tab pane='tab3'>
+              @fat
+            </Tab>
+            <Tab pane='tab4'>
+              @mdo
+            </Tab>
+          </TabDropdown>
+        </TabList>
+        <TabContent>
+          <TabPane>
+            <LoremIpsum query='5s' />
+          </TabPane>
+          <TabPane>
+            <LoremIpsum query='5s' />
+          </TabPane>
+          <TabPane>
+            <LoremIpsum query='5s' />
+          </TabPane>
+          <TabPane>
+            <LoremIpsum query='5s' />
+          </TabPane>
+        </TabContent>
+      </TabContainer>
+    );
+  }
+}

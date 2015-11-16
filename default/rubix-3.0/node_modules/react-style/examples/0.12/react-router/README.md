@@ -1,0 +1,1 @@
+Taken from: https://github.com/rackt/react-router/tree/master/examples/simple-master-detail

@@ -1,0 +1,11 @@
+class Demo extends React.Component {
+  componentDidMount() {
+    var value = this.refs.textareaelement.value;
+    console.log(value === 'Default Value');
+  }
+  render() {
+    return (
+      <Textarea ref='textareaelement' rows='3' defaultValue='Default Value' />
+    );
+  }
+}

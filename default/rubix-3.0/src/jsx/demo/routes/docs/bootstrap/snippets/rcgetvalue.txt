@@ -1,0 +1,13 @@
+class Demo extends React.Component {
+  componentDidMount() {
+    var value = this.refs.check.value;
+    console.log(value === 'Should be checked');
+  }
+  render() {
+    return (
+      <Checkbox ref='check' defaultChecked>
+        Should be checked
+      </Checkbox>
+    );
+  }
+}

@@ -1,0 +1,11 @@
+class Demo extends React.Component {
+  componentDidMount() {
+    var node = this.refs.textareaelement.node;
+    console.log(node.getAttribute('rows') === 3);
+  }
+  render() {
+    return (
+      <Textarea ref='textareaelement' rows='3' />
+    );
+  }
+}

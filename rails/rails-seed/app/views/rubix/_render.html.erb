@@ -1,0 +1,7 @@
+<% content_for :head do %>
+<script type="text/javascript">
+  var server_data = <%= raw response %>;
+</script>
+<% end %>
+
+<%= react_component('global.StaticComponent', response, {prerender: true}) %>

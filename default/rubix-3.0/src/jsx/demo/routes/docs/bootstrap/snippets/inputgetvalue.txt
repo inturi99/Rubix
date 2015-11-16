@@ -1,0 +1,11 @@
+class Demo extends React.Component {
+  componentDidMount() {
+    var value = this.refs.inputelement.value;
+    console.log(value === 'Default Value');
+  }
+  render() {
+    return (
+      <Input type='text' ref='inputelement' defaultValue='Default Value' />
+    );
+  }
+}
