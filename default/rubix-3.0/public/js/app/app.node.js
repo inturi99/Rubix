@@ -4978,7 +4978,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h4',
 	                                null,
-	                                'Please Choose'
+	                                'Labour Force Parameters'
 	                            )
 	                        ),
 	                        _react2['default'].createElement(
@@ -5000,7 +5000,8 @@ module.exports =
 	                                    null,
 	                                    _react2['default'].createElement(ComboBox, { dates: yearsData(2012, 2030), onChange: this.onChange.bind(this), tdata: this.state.tabledata })
 	                                )
-	                            )
+	                            ),
+	                            _react2['default'].createElement('input', { type: 'text', defaultValue: '75', className: 'dial autosize', 'data-width': '100%', 'data-fgcolor': '#F09FA6' })
 	                        )
 	                    )
 	                ),
@@ -5016,7 +5017,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h4',
 	                                null,
-	                                'Line Chart'
+	                                'Labour Force Parameter Trend'
 	                            )
 	                        ),
 	                        _react2['default'].createElement(
@@ -5039,7 +5040,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h4',
 	                                null,
-	                                'Bar Chart'
+	                                'Comparative Labour Force Parameters'
 	                            )
 	                        ),
 	                        _react2['default'].createElement(
@@ -5064,7 +5065,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h6',
 	                                { className: 'side', style: { color: "rgb(190,186,218)" } },
-	                                ': SC-PERSONS '
+	                                ': SC-PERSON '
 	                            ),
 	                            _react2['default'].createElement(
 	                                'h6',
@@ -5079,7 +5080,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h6',
 	                                { className: 'side', style: { color: "rgb(253,180,98)" } },
-	                                ': ST-PERSONS '
+	                                ': ST-PERSON '
 	                            ),
 	                            _react2['default'].createElement(
 	                                'h6',
@@ -5094,7 +5095,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h6',
 	                                { className: 'side', style: { color: "rgb(217,217,217)" } },
-	                                ': OBC-PERSONS '
+	                                ': OBC-PERSON '
 	                            ),
 	                            _react2['default'].createElement(
 	                                'h6',
@@ -5109,7 +5110,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                'h6',
 	                                { className: 'side', style: { color: "rgb(255,237,111)" } },
-	                                ': OTHERS-PERSONS'
+	                                ': OTHERS-PERSON'
 	                            ),
 	                            _react2['default'].createElement(_reactChartjs.Bar, { id: 'bchart', data: this.state.bdata, options: baroptions, style: { "height": "250px", "width": "100%" }, redraw: true })
 	                        )
@@ -5167,7 +5168,7 @@ module.exports =
 	                            _react2['default'].createElement(
 	                                Radio,
 	                                { inline: true, id: 'person', value: 'option3', defaultChecked: true, name: 'gen', onClick: this.props.genderHandle.bind(this) },
-	                                'Persons'
+	                                'Person'
 	                            )
 	                        )
 	                    ),
@@ -5358,6 +5359,52 @@ module.exports =
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            $('.tablesaw').table();
+
+	            $('.dial').knob();
+	            $('.knob').knob({
+	                draw: function draw() {
+	                    // 'tron' case
+	                    if (this.$.data('skin') == 'tron') {
+	                        var a = this.angle(this.cv),
+	                            // Angle
+	                        sa = this.startAngle,
+	                            // Previous start angle
+	                        sat = this.startAngle,
+	                            // Start angle
+	                        ea,
+	                            // Previous end angle
+	                        eat = sat + a,
+	                            // End angle
+	                        r = true;
+
+	                        this.g.lineWidth = this.lineWidth;
+
+	                        this.o.cursor && (sat = eat - 0.3) && (eat = eat + 0.3);
+
+	                        if (this.o.displayPrevious) {
+	                            ea = this.startAngle + this.angle(this.value);
+	                            this.o.cursor && (sa = ea - 0.3) && (ea = ea + 0.3);
+	                            this.g.beginPath();
+	                            this.g.strokeStyle = this.previousColor;
+	                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
+	                            this.g.stroke();
+	                        }
+
+	                        this.g.beginPath();
+	                        this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
+	                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
+	                        this.g.stroke();
+
+	                        this.g.lineWidth = 2;
+	                        this.g.beginPath();
+	                        this.g.strokeStyle = this.o.fgColor;
+	                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+	                        this.g.stroke();
+
+	                        return false;
+	                    }
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'render',
