@@ -10,6 +10,7 @@ import Inbox from 'routes/inbox';
 import Mail from 'routes/mail';
 import Compose from 'routes/compose';
 import Calendar from 'routes/calendar';
+import Population from 'routes/population'
 
 
 export default (withHistory, onUpdate) => {
@@ -23,6 +24,7 @@ export default (withHistory, onUpdate) => {
    <Route path='/' component={Lock} />
    <Route path='/app/lock' component={Lock} />   
 <Route path='/app/dashboard' component={Blank} />
+        <Route path='/app/populationdashboard' component={Population} />
 <Route path='/app/login' component={Login} />
 
  <Route path='/app/mailbox/inbox' component={Inbox} />

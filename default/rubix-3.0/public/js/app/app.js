@@ -54,7 +54,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _globalRouter = __webpack_require__(61);
+	var _globalRouter = __webpack_require__(63);
 
 	var _globalRouter2 = _interopRequireDefault(_globalRouter);
 
@@ -153,6 +153,10 @@
 
 	var _routesCalendar2 = _interopRequireDefault(_routesCalendar);
 
+	var _routesPopulation = __webpack_require__(61);
+
+	var _routesPopulation2 = _interopRequireDefault(_routesPopulation);
+
 	exports['default'] = function (withHistory, onUpdate) {
 	  var history = withHistory ? Modernizr.history ? new _reactRouterLibBrowserHistory2['default']() : new _reactRouterLibHashHistory2['default']() : null;
 	  return React.createElement(
@@ -161,6 +165,7 @@
 	    React.createElement(_reactRouter.Route, { path: '/', component: _routesLock2['default'] }),
 	    React.createElement(_reactRouter.Route, { path: '/app/lock', component: _routesLock2['default'] }),
 	    React.createElement(_reactRouter.Route, { path: '/app/dashboard', component: _routesBlank2['default'] }),
+	    React.createElement(_reactRouter.Route, { path: '/app/populationdashboard', component: _routesPopulation2['default'] }),
 	    React.createElement(_reactRouter.Route, { path: '/app/login', component: _routesLogin2['default'] }),
 	    React.createElement(_reactRouter.Route, { path: '/app/mailbox/inbox', component: _routesInbox2['default'] }),
 	    React.createElement(_reactRouter.Route, { path: '/app/mailbox/mail', component: _routesMail2['default'] }),
@@ -4381,6 +4386,7 @@
 	                  _globalJsxSidebar_component.SidebarNav,
 	                  { style: { marginBottom: 0 } },
 	                  React.createElement(_globalJsxSidebar_component.SidebarNavItem, { glyph: 'icon-fontello-gauge', name: 'Dashboard', href: '/app/dashboard' }),
+	                  React.createElement(_globalJsxSidebar_component.SidebarNavItem, { glyph: 'icon-fontello-gauge', name: 'Population', href: '/app/populationdashboard' }),
 	                  React.createElement(
 	                    _globalJsxSidebar_component.SidebarNavItem,
 	                    { glyph: 'icon-feather-mail', name: React.createElement(
@@ -4788,7 +4794,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4812,1008 +4818,1074 @@
 	var _underscore2 = _interopRequireDefault(_underscore);
 
 	function mean(data, prop) {
-	    return _underscore2['default'].reduce(data, function (acc, d) {
-	        return acc + d[prop];
-	    }, 0) / data.length;
+	  return _underscore2['default'].reduce(data, function (acc, d) {
+	    return acc + d[prop];
+	  }, 0) / data.length;
 	}
 
 	function a(xbar, ybar, b) {
-	    return ybar - b * xbar;
+	  return ybar - b * xbar;
 	}
 
 	function b(xmean, ymean, data) {
-	    return _underscore2['default'].reduce(data, function (acc, d) {
-	        return acc + (d.year - xmean) * (d.y - ymean);
-	    }, 0) / _underscore2['default'].reduce(data, function (acc, d) {
-	        return acc + Math.pow(d.year - xmean, 2);
-	    }, 0);
+	  return _underscore2['default'].reduce(data, function (acc, d) {
+	    return acc + (d.year - xmean) * (d.y - ymean);
+	  }, 0) / _underscore2['default'].reduce(data, function (acc, d) {
+	    return acc + Math.pow(d.year - xmean, 2);
+	  }, 0);
 	}
 
 	function y(x, data) {
-	    var xbar = mean(data, "year");
-	    var ybar = mean(data, "y");
-	    var bop = b(xbar, ybar, data);
-	    return parseInt(a(xbar, ybar, bop) + bop * x);
+	  var xbar = mean(data, "year");
+	  var ybar = mean(data, "y");
+	  var bop = b(xbar, ybar, data);
+	  return parseInt(a(xbar, ybar, bop) + bop * x);
 	}
 
 	function y1(a, b, x) {
-	    return parseInt(a + b * x);
+	  return parseInt(a + b * x);
 	}
 
 	function labour_rate_persons_data() {
 
-	    return [{ "year": 1, "y": 9.4 }, { "year": 3, "y": 3.55 }, { "year": 4, "y": 4.6 }, { "year": 5, "y": 4.15 }];
+	  return [{ "year": 1, "y": 9.4 }, { "year": 3, "y": 3.55 }, { "year": 4, "y": 4.6 }, { "year": 5, "y": 4.15 }];
 	}
 
 	function getY(year, data) {
-	    return y(year, data);
+	  return y(year, data);
 	}
 
 	function getData(labeldata, dataarray) {
-	    return { labels: labeldata,
-	        datasets: [{
-	            label: "original",
-	            //fillColor: "rgba(220,220,220,0.2)",
-	            //strokeColor: "rgba(220,220,220,1)",
-	            //pointColor: "rgba(220,220,220,1)",
-	            //pointrokeColor: "#fff",
-	            //pointHighlightFill: "#fff",
-	            //pointHighlightStroke: "rgba(220,220,220,1)",
-	            fillColor: "rgba(128,170,212,0.7)", //"#80AAD4"//"rgba(151,187,205,0.2)"
-	            strokeColor: "#0054A9", //"rgba(151,187,205,1)",
-	            pointColor: "#0054A9", //"rgba(151,187,205,1)",
-	            pointStrokeColor: "#0054A9", //"#fff",
-	            pointHighlightFill: "#0054A9", //"#fff",
-	            pointHighlightStroke: "#0054A9", //"rgba(151,187,205,1)",
-	            data: dataarray
-	        }] };
+	  return { labels: labeldata,
+	    datasets: [{
+	      label: "original",
+	      //fillColor: "rgba(220,220,220,0.2)",
+	      //strokeColor: "rgba(220,220,220,1)",
+	      //pointColor: "rgba(220,220,220,1)",
+	      //pointrokeColor: "#fff",
+	      //pointHighlightFill: "#fff",
+	      //pointHighlightStroke: "rgba(220,220,220,1)",
+	      fillColor: "rgba(128,170,212,0.7)", //"#80AAD4"//"rgba(151,187,205,0.2)"
+	      strokeColor: "#0054A9", //"rgba(151,187,205,1)",
+	      pointColor: "#0054A9", //"rgba(151,187,205,1)",
+	      pointStrokeColor: "#0054A9", //"#fff",
+	      pointHighlightFill: "#0054A9", //"#fff",
+	      pointHighlightStroke: "#0054A9", //"rgba(151,187,205,1)",
+	      data: dataarray
+	    }] };
 	}
 
 	var options = { bezierCurve: true, datasetFill: true, pointDot: true };
 	var baroptions = { barValueSpacing: 20, showTooltips: false,
-	    onAnimationComplete: function onAnimationComplete() {
+	  onAnimationComplete: function onAnimationComplete() {
 
-	        var ctx = this.chart.ctx;
-	        ctx.font = this.scale.font;
-	        ctx.fillStyle = this.scale.textColor;
-	        ctx.textAlign = "center";
-	        ctx.textBaseline = "bottom";
+	    var ctx = this.chart.ctx;
+	    ctx.font = this.scale.font;
+	    ctx.fillStyle = this.scale.textColor;
+	    ctx.textAlign = "center";
+	    ctx.textBaseline = "bottom";
 
-	        this.datasets.forEach(function (dataset) {
-	            dataset.bars.forEach(function (bar) {
-	                ctx.fillText(bar.value, bar.x, bar.y - 5);
-	            });
-	        });
-	    } };
+	    this.datasets.forEach(function (dataset) {
+	      dataset.bars.forEach(function (bar) {
+	        ctx.fillText(bar.value, bar.x, bar.y - 5);
+	      });
+	    });
+	  } };
 
 	var LineChart = (function (_Component) {
-	    _inherits(LineChart, _Component);
+	  _inherits(LineChart, _Component);
 
-	    function LineChart(props) {
-	        _classCallCheck(this, LineChart);
+	  function LineChart(props) {
+	    _classCallCheck(this, LineChart);
 
-	        _get(Object.getPrototypeOf(LineChart.prototype), 'constructor', this).call(this, props);
-	        this.state = { data: props.data, tdata: [], bdata: this.props.bdata };
+	    _get(Object.getPrototypeOf(LineChart.prototype), 'constructor', this).call(this, props);
+	    this.state = { data: props.data, tdata: [], bdata: this.props.bdata, knobval: 30 };
+	  }
+
+	  _createClass(LineChart, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+
+	      $('#dates').val(2014);
+	      var fvalues = getFilterValues(this.props.type);
+	      if (fvalues.year > 0) {
+	        $.ajax({
+	          url: "http://localhost:8091/" + getChartType(fvalues.type),
+	          dataType: 'json',
+	          cache: false,
+	          success: (function (data) {
+	            var dt = data.filter(function (i) {
+	              return i.type === fvalues.datatype;
+	            });
+	            var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
+	              return d.year;
+	            }));
+	            var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
+	            this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]), knobval: newdata[1].datasets[0].data[newdata[1].datasets[0].data.length - 1] });
+	          }).bind(this),
+	          error: (function (xhr, status, err) {
+	            console.log(xhr);
+	            console.error(this.props.url, status, err.toString());
+	          }).bind(this)
+	        });
+	      }
 	    }
-
-	    _createClass(LineChart, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-
-	            $('#dates').val(2014);
-	            var fvalues = getFilterValues(this.props.type);
-	            if (fvalues.year > 0) {
-	                $.ajax({
-	                    url: "http://localhost:8091/" + getChartType(fvalues.type),
-	                    dataType: 'json',
-	                    cache: false,
-	                    success: (function (data) {
-	                        var dt = data.filter(function (i) {
-	                            return i.type === fvalues.datatype;
-	                        });
-	                        var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
-	                            return d.year;
-	                        }));
-	                        var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
-	                        this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                        console.log({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                        console.log(this);
-	                    }).bind(this),
-	                    error: (function (xhr, status, err) {
-	                        console.log(xhr);
-	                        console.error(this.props.url, status, err.toString());
-	                    }).bind(this)
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'handleDataType',
-	        value: function handleDataType() {
-	            var fvalues = getFilterValues(this.props.type);
-	            if (fvalues.year > 0) {
-	                $.ajax({
-	                    url: "http://localhost:8091/" + getChartType(fvalues.type),
-	                    dataType: 'json',
-	                    cache: false,
-	                    success: (function (data) {
-	                        var dt = data.filter(function (i) {
-	                            return i.type === fvalues.datatype;
-	                        });
-	                        var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
-	                            return d.year;
-	                        }));
-	                        var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
-	                        this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                    }).bind(this),
-	                    error: (function (xhr, status, err) {
-	                        console.log(xhr);
-	                        console.error(this.props.url, status, err.toString());
-	                    }).bind(this)
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'onChange',
-	        value: function onChange() {
-	            var fvalues = getFilterValues(this.props.type);
-	            if (fvalues.year > 0) {
-	                $.ajax({
-	                    url: "http://localhost:8091/" + getChartType(fvalues.type),
-	                    dataType: 'json',
-	                    cache: false,
-	                    success: (function (data) {
-	                        var dt = data.filter(function (i) {
-	                            return i.type === fvalues.datatype;
-	                        });
-	                        var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
-	                            return d.year;
-	                        }));
-	                        var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
-	                        this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                    }).bind(this),
-	                    error: (function (xhr, status, err) {
-	                        console.log(xhr);
-	                        console.error(this.props.url, status, err.toString());
-	                    }).bind(this)
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'casteHandle',
-	        value: function casteHandle() {
-	            var fvalues = getFilterValues(this.props.type);
-	            if (fvalues.year > 0) {
-	                $.ajax({
-	                    url: "http://localhost:8091/" + getChartType(fvalues.type),
-	                    dataType: 'json',
-	                    cache: false,
-	                    success: (function (data) {
-	                        var dt = data.filter(function (i) {
-	                            return i.type === fvalues.datatype;
-	                        });
-	                        var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
-	                            return d.year;
-	                        }));
-	                        var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
-	                        this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                    }).bind(this),
-	                    error: (function (xhr, status, err) {
-	                        console.log(xhr);
-	                        console.error(this.props.url, status, err.toString());
-	                    }).bind(this)
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'genderHandle',
-	        value: function genderHandle() {
-	            var fvalues = getFilterValues(this.props.type);
-	            if (fvalues.year > 0) {
-	                $.ajax({
-	                    url: "http://localhost:8091/" + getChartType(fvalues.type),
-	                    dataType: 'json',
-	                    cache: false,
-	                    success: (function (data) {
-	                        var dt = data.filter(function (i) {
-	                            return i.type === fvalues.datatype;
-	                        });
-	                        var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
-	                            return d.year;
-	                        }));
-	                        var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
-	                        this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                    }).bind(this),
-	                    error: (function (xhr, status, err) {
-	                        console.log(xhr);
-	                        console.error(this.props.url, status, err.toString());
-	                    }).bind(this)
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'geoHandle',
-	        value: function geoHandle() {
-	            var fvalues = getFilterValues(this.props.type);
-	            if (fvalues.year > 0) {
-	                $.ajax({
-	                    url: "http://localhost:8091/" + getChartType(fvalues.type),
-	                    dataType: 'json',
-	                    cache: false,
-	                    success: (function (data) {
-	                        var dt = data.filter(function (i) {
-	                            return i.type === fvalues.datatype;
-	                        });
-	                        var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
-	                            return d.year;
-	                        }));
-	                        var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
-	                        this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]) });
-	                    }).bind(this),
-	                    error: (function (xhr, status, err) {
-	                        console.log(xhr);
-	                        console.error(this.props.url, status, err.toString());
-	                    }).bind(this)
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2['default'].createElement(
-	                Container,
-	                { id: 'graph' },
+	  }, {
+	    key: 'handleDataType',
+	    value: function handleDataType() {
+	      var fvalues = getFilterValues(this.props.type);
+	      if (fvalues.year > 0) {
+	        $.ajax({
+	          url: "http://localhost:8091/" + getChartType(fvalues.type),
+	          dataType: 'json',
+	          cache: false,
+	          success: (function (data) {
+	            var dt = data.filter(function (i) {
+	              return i.type === fvalues.datatype;
+	            });
+	            var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
+	              return d.year;
+	            }));
+	            var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
+	            this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]), knobval: newdata[1].datasets[0].data[newdata[1].datasets[0].data.length - 1] });
+	          }).bind(this),
+	          error: (function (xhr, status, err) {
+	            console.log(xhr);
+	            console.error(this.props.url, status, err.toString());
+	          }).bind(this)
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange() {
+	      var fvalues = getFilterValues(this.props.type);
+	      if (fvalues.year > 0) {
+	        $.ajax({
+	          url: "http://localhost:8091/" + getChartType(fvalues.type),
+	          dataType: 'json',
+	          cache: false,
+	          success: (function (data) {
+	            var dt = data.filter(function (i) {
+	              return i.type === fvalues.datatype;
+	            });
+	            var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
+	              return d.year;
+	            }));
+	            var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
+	            this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]), knobval: newdata[1].datasets[0].data[newdata[1].datasets[0].data.length - 1] });
+	          }).bind(this),
+	          error: (function (xhr, status, err) {
+	            console.log(xhr);
+	            console.error(this.props.url, status, err.toString());
+	          }).bind(this)
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'casteHandle',
+	    value: function casteHandle() {
+	      var fvalues = getFilterValues(this.props.type);
+	      if (fvalues.year > 0) {
+	        $.ajax({
+	          url: "http://localhost:8091/" + getChartType(fvalues.type),
+	          dataType: 'json',
+	          cache: false,
+	          success: (function (data) {
+	            var dt = data.filter(function (i) {
+	              return i.type === fvalues.datatype;
+	            });
+	            var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
+	              return d.year;
+	            }));
+	            var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
+	            this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]), knobval: newdata[1].datasets[0].data[newdata[1].datasets[0].data.length - 1] });
+	          }).bind(this),
+	          error: (function (xhr, status, err) {
+	            console.log(xhr);
+	            console.error(this.props.url, status, err.toString());
+	          }).bind(this)
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'genderHandle',
+	    value: function genderHandle() {
+	      var fvalues = getFilterValues(this.props.type);
+	      if (fvalues.year > 0) {
+	        $.ajax({
+	          url: "http://localhost:8091/" + getChartType(fvalues.type),
+	          dataType: 'json',
+	          cache: false,
+	          success: (function (data) {
+	            var dt = data.filter(function (i) {
+	              return i.type === fvalues.datatype;
+	            });
+	            var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
+	              return d.year;
+	            }));
+	            var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
+	            this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]), knobval: newdata[1].datasets[0].data[newdata[1].datasets[0].data.length - 1] });
+	          }).bind(this),
+	          error: (function (xhr, status, err) {
+	            console.log(xhr);
+	            console.error(this.props.url, status, err.toString());
+	          }).bind(this)
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'geoHandle',
+	    value: function geoHandle() {
+	      var fvalues = getFilterValues(this.props.type);
+	      if (fvalues.year > 0) {
+	        $.ajax({
+	          url: "http://localhost:8091/" + getChartType(fvalues.type),
+	          dataType: 'json',
+	          cache: false,
+	          success: (function (data) {
+	            var dt = data.filter(function (i) {
+	              return i.type === fvalues.datatype;
+	            });
+	            var maxminDates = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(dt, function (d) {
+	              return d.year;
+	            }));
+	            var newdata = fvalues.year >= maxminDates[0] && fvalues.year <= maxminDates[1] ? getPresentData(dt, fvalues) : PredictData(dt, fvalues);
+	            this.setState({ tdata: newdata[0], data: newdata[1], bdata: barChartData(newdata[0]), knobval: newdata[1].datasets[0].data[newdata[1].datasets[0].data.length - 1] });
+	          }).bind(this),
+	          error: (function (xhr, status, err) {
+	            console.log(xhr);
+	            console.error(this.props.url, status, err.toString());
+	          }).bind(this)
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        Container,
+	        { id: 'graph' },
+	        _react2['default'].createElement(
+	          PanelContainer,
+	          { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
+	          _react2['default'].createElement(
+	            Panel,
+	            { horizontal: true, className: 'force-collapse' },
+	            _react2['default'].createElement(
+	              PanelLeft,
+	              { className: 'col-xs-6' },
+	              _react2['default'].createElement(
+	                PanelHeader,
+	                { className: 'bg-orange75 fg-white center text-center' },
 	                _react2['default'].createElement(
-	                    PanelContainer,
-	                    { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
-	                    _react2['default'].createElement(
-	                        Panel,
-	                        null,
-	                        _react2['default'].createElement(
-	                            PanelHeader,
-	                            { className: 'bg-orange75 fg-white center text-center' },
-	                            _react2['default'].createElement(
-	                                'h4',
-	                                null,
-	                                'Please Choose'
-	                            )
-	                        ),
-	                        _react2['default'].createElement(
-	                            PanelBody,
-	                            { style: { padding: 10 } },
-	                            _react2['default'].createElement(Filter, { handleDataType: this.handleDataType.bind(this),
-	                                data: this.state.data, tdata: this.state.tdata, casteHandle: this.casteHandle.bind(this),
-	                                genderHandle: this.genderHandle.bind(this), geoHandle: this.geoHandle.bind(this) }),
-	                            _react2['default'].createElement(
-	                                FormGroup,
-	                                null,
-	                                _react2['default'].createElement(
-	                                    Label,
-	                                    null,
-	                                    'Year'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    'div',
-	                                    null,
-	                                    _react2['default'].createElement(ComboBox, { dates: yearsData(2012, 2030), onChange: this.onChange.bind(this), tdata: this.state.tabledata })
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
+	                  'h4',
+	                  null,
+	                  'Labour Force Parameters'
+	                )
+	              ),
+	              _react2['default'].createElement(
+	                PanelBody,
+	                { style: { padding: 10 } },
+	                _react2['default'].createElement(Filter, { handleDataType: this.handleDataType.bind(this),
+	                  data: this.state.data, tdata: this.state.tdata, casteHandle: this.casteHandle.bind(this),
+	                  genderHandle: this.genderHandle.bind(this), geoHandle: this.geoHandle.bind(this) }),
 	                _react2['default'].createElement(
-	                    PanelContainer,
-	                    { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
-	                    _react2['default'].createElement(
-	                        Panel,
-	                        null,
-	                        _react2['default'].createElement(
-	                            PanelHeader,
-	                            { className: 'bg-orange75 fg-white center text-center' },
-	                            _react2['default'].createElement(
-	                                'h4',
-	                                null,
-	                                'Line Chart'
-	                            )
-	                        ),
-	                        _react2['default'].createElement(
-	                            PanelBody,
-	                            null,
-	                            _react2['default'].createElement(_reactChartjs.Line, { id: 'chart', data: this.state.data, options: options, style: { "height": "250px", "width": "100%" },
-	                                margin: '10', redraw: true })
-	                        )
-	                    )
-	                ),
+	                  FormGroup,
+	                  null,
+	                  _react2['default'].createElement(
+	                    Label,
+	                    null,
+	                    'Year'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'div',
+	                    null,
+	                    _react2['default'].createElement(ComboBox, { dates: yearsData(2012, 2030), onChange: this.onChange.bind(this), tdata: this.state.tabledata })
+	                  )
+	                )
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              PanelRight,
+	              { className: 'col-xs-6 text-center' },
+	              _react2['default'].createElement(
+	                PanelHeader,
+	                { className: 'bg-orange75 fg-white center text-center' },
 	                _react2['default'].createElement(
-	                    PanelContainer,
-	                    { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
-	                    _react2['default'].createElement(
-	                        Panel,
-	                        null,
-	                        _react2['default'].createElement(
-	                            PanelHeader,
-	                            { className: 'bg-orange75 fg-white center text-center' },
-	                            _react2['default'].createElement(
-	                                'h4',
-	                                null,
-	                                'Bar Chart'
-	                            )
-	                        ),
-	                        _react2['default'].createElement(
-	                            PanelBody,
-	                            null,
-	                            _react2['default'].createElement(
-	                                'title',
-	                                null,
-	                                'Guess what?'
-	                            ),
-	                            _react2['default'].createElement('style', { type: 'text/css', dangerouslySetInnerHTML: { __html: "\n<!--\n.side { vertical-align:absbottom; display:inline }\n-->\n" } }),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(141,211,199)" } },
-	                                ' SC-MALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(251,180,174)" } },
-	                                ': SC-FEMALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(190,186,218)" } },
-	                                ': SC-PERSONS '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(251,128,114)" } },
-	                                ': ST-MALE  '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(128,177,211)" } },
-	                                ': ST-FEMALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(253,180,98)" } },
-	                                ': ST-PERSONS '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(179,222,105)" } },
-	                                ': OBC-MALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(252,205,229)" } },
-	                                ': OBC-FEMALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(217,217,217)" } },
-	                                ': OBC-PERSONS '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(188,128,189)" } },
-	                                ': OTHERS-MALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(204,235,197)" } },
-	                                ': OTHERS-FEMALE '
-	                            ),
-	                            _react2['default'].createElement(
-	                                'h6',
-	                                { className: 'side', style: { color: "rgb(255,237,111)" } },
-	                                ': OTHERS-PERSONS'
-	                            ),
-	                            _react2['default'].createElement(_reactChartjs.Bar, { id: 'bchart', data: this.state.bdata, options: baroptions, style: { "height": "250px", "width": "100%" }, redraw: true })
-	                        )
-	                    )
-	                ),
-	                _react2['default'].createElement(DataTable, { tabledata: this.state.tdata, type: this.props.title })
-	            );
-	        }
-	    }]);
+	                  'h4',
+	                  null,
+	                  'Labour Force Parameter Trend'
+	                )
+	              ),
+	              _react2['default'].createElement(
+	                PanelBody,
+	                { style: { padding: 10 } },
+	                _react2['default'].createElement('input', { type: 'text', value: this.state.knobval, className: 'dial autosize', 'data-width': '100%', 'data-fgcolor': '#F09FA6', disabled: true })
+	              )
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          PanelContainer,
+	          { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
+	          _react2['default'].createElement(
+	            Panel,
+	            null,
+	            _react2['default'].createElement(
+	              PanelHeader,
+	              { className: 'bg-orange75 fg-white center text-center' },
+	              _react2['default'].createElement(
+	                'h4',
+	                null,
+	                'Labour Force Parameter Trend'
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              PanelBody,
+	              null,
+	              _react2['default'].createElement(_reactChartjs.Line, { id: 'chart', data: this.state.data, options: options, style: { "height": "250px", "width": "100%" },
+	                margin: '10', redraw: true })
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          PanelContainer,
+	          { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
+	          _react2['default'].createElement(
+	            Panel,
+	            null,
+	            _react2['default'].createElement(
+	              PanelHeader,
+	              { className: 'bg-orange75 fg-white center text-center' },
+	              _react2['default'].createElement(
+	                'h4',
+	                null,
+	                'Comparative Labour Force Parameters'
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              PanelBody,
+	              null,
+	              _react2['default'].createElement(
+	                'title',
+	                null,
+	                'Guess what?'
+	              ),
+	              _react2['default'].createElement('style', { type: 'text/css', dangerouslySetInnerHTML: { __html: "\n<!--\n.side { vertical-align:absbottom; display:inline }\n-->\n" } }),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(141,211,199)" } },
+	                ' SC-MALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(251,180,174)" } },
+	                ': SC-FEMALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(190,186,218)" } },
+	                ': SC-PERSON '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(251,128,114)" } },
+	                ': ST-MALE  '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(128,177,211)" } },
+	                ': ST-FEMALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(253,180,98)" } },
+	                ': ST-PERSON '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(179,222,105)" } },
+	                ': OBC-MALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(252,205,229)" } },
+	                ': OBC-FEMALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(217,217,217)" } },
+	                ': OBC-PERSON '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(188,128,189)" } },
+	                ': OTHERS-MALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(204,235,197)" } },
+	                ': OTHERS-FEMALE '
+	              ),
+	              _react2['default'].createElement(
+	                'h6',
+	                { className: 'side', style: { color: "rgb(255,237,111)" } },
+	                ': OTHERS-PERSON'
+	              ),
+	              _react2['default'].createElement(_reactChartjs.Bar, { id: 'bchart', data: this.state.bdata, options: baroptions, style: { "height": "250px", "width": "100%" }, redraw: true })
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(DataTable, { tabledata: this.state.tdata, type: this.props.title })
+	      );
+	    }
+	  }]);
 
-	    return LineChart;
+	  return LineChart;
 	})(_react.Component);
 
 	exports.LineChart = LineChart;
 
 	var Filter = (function (_Component2) {
-	    _inherits(Filter, _Component2);
+	  _inherits(Filter, _Component2);
 
-	    function Filter() {
-	        _classCallCheck(this, Filter);
+	  function Filter() {
+	    _classCallCheck(this, Filter);
 
-	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Filter, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        Container,
+	        null,
+	        _react2['default'].createElement(
+	          Form,
+	          null,
+	          _react2['default'].createElement(
+	            FormGroup,
+	            null,
+	            _react2['default'].createElement(
+	              Label,
+	              null,
+	              'Gender'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              null,
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'male', value: 'option1', name: 'gen', onClick: this.props.genderHandle.bind(this) },
+	                'Male'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'female', value: 'option2', name: 'gen', onClick: this.props.genderHandle.bind(this) },
+	                'Female'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'person', value: 'option3', defaultChecked: true, name: 'gen', onClick: this.props.genderHandle.bind(this) },
+	                'Person'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            FormGroup,
+	            null,
+	            _react2['default'].createElement(
+	              Label,
+	              null,
+	              'Social Group'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              null,
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'SC', value: 'option1', name: 'cat', onClick: this.props.casteHandle.bind(this) },
+	                'SC'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'ST', value: 'option2', name: 'cat', onClick: this.props.casteHandle.bind(this) },
+	                'ST'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'OBC', value: 'option3', name: 'cat', onClick: this.props.casteHandle.bind(this) },
+	                'OBC'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'OTHERS', value: 'option3', name: 'cat', onClick: this.props.casteHandle.bind(this) },
+	                'OTHERS'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'OVERALL', value: 'option3', defaultChecked: true, name: 'cat', onClick: this.props.casteHandle.bind(this) },
+	                'OVERALL'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            FormGroup,
+	            null,
+	            _react2['default'].createElement(
+	              Label,
+	              null,
+	              'Category'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              null,
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'rural', value: 'option1', name: 'geo', onClick: this.props.geoHandle.bind(this) },
+	                'RURAL'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'urban', value: 'option2', name: 'geo', onClick: this.props.geoHandle.bind(this) },
+	                'URBAN'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'rural_urban', value: 'option3', defaultChecked: true, name: 'geo', onClick: this.props.geoHandle.bind(this) },
+	                'RURAL+URBAN'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            FormGroup,
+	            null,
+	            _react2['default'].createElement(
+	              Label,
+	              null,
+	              'Approach'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              null,
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'UPS', value: 'option1', defaultChecked: true, name: 'datatype', onClick: this.props.handleDataType.bind(this) },
+	                'UPS'
+	              ),
+	              _react2['default'].createElement(
+	                Radio,
+	                { inline: true, id: 'UPSS', value: 'option2', name: 'datatype', onClick: this.props.handleDataType.bind(this) },
+	                'UPSS'
+	              )
+	            )
+	          )
+	        )
+	      );
 	    }
+	  }]);
 
-	    _createClass(Filter, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2['default'].createElement(
-	                Container,
-	                null,
-	                _react2['default'].createElement(
-	                    Form,
-	                    null,
-	                    _react2['default'].createElement(
-	                        FormGroup,
-	                        null,
-	                        _react2['default'].createElement(
-	                            Label,
-	                            null,
-	                            'Gender'
-	                        ),
-	                        _react2['default'].createElement(
-	                            'div',
-	                            null,
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'male', value: 'option1', name: 'gen', onClick: this.props.genderHandle.bind(this) },
-	                                'Male'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'female', value: 'option2', name: 'gen', onClick: this.props.genderHandle.bind(this) },
-	                                'Female'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'person', value: 'option3', defaultChecked: true, name: 'gen', onClick: this.props.genderHandle.bind(this) },
-	                                'Persons'
-	                            )
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        FormGroup,
-	                        null,
-	                        _react2['default'].createElement(
-	                            Label,
-	                            null,
-	                            'Social Group'
-	                        ),
-	                        _react2['default'].createElement(
-	                            'div',
-	                            null,
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'SC', value: 'option1', name: 'cat', onClick: this.props.casteHandle.bind(this) },
-	                                'SC'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'ST', value: 'option2', name: 'cat', onClick: this.props.casteHandle.bind(this) },
-	                                'ST'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'OBC', value: 'option3', name: 'cat', onClick: this.props.casteHandle.bind(this) },
-	                                'OBC'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'OTHERS', value: 'option3', name: 'cat', onClick: this.props.casteHandle.bind(this) },
-	                                'OTHERS'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'OVERALL', value: 'option3', defaultChecked: true, name: 'cat', onClick: this.props.casteHandle.bind(this) },
-	                                'OVERALL'
-	                            )
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        FormGroup,
-	                        null,
-	                        _react2['default'].createElement(
-	                            Label,
-	                            null,
-	                            'Category'
-	                        ),
-	                        _react2['default'].createElement(
-	                            'div',
-	                            null,
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'rural', value: 'option1', name: 'geo', onClick: this.props.geoHandle.bind(this) },
-	                                'RURAL'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'urban', value: 'option2', name: 'geo', onClick: this.props.geoHandle.bind(this) },
-	                                'URBAN'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'rural_urban', value: 'option3', defaultChecked: true, name: 'geo', onClick: this.props.geoHandle.bind(this) },
-	                                'RURAL+URBAN'
-	                            )
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        FormGroup,
-	                        null,
-	                        _react2['default'].createElement(
-	                            Label,
-	                            null,
-	                            'Approach'
-	                        ),
-	                        _react2['default'].createElement(
-	                            'div',
-	                            null,
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'UPS', value: 'option1', defaultChecked: true, name: 'datatype', onClick: this.props.handleDataType.bind(this) },
-	                                'UPS'
-	                            ),
-	                            _react2['default'].createElement(
-	                                Radio,
-	                                { inline: true, id: 'UPSS', value: 'option2', name: 'datatype', onClick: this.props.handleDataType.bind(this) },
-	                                'UPSS'
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Filter;
+	  return Filter;
 	})(_react.Component);
 
 	exports.Filter = Filter;
 
 	var ComboBox = (function (_Component3) {
-	    _inherits(ComboBox, _Component3);
+	  _inherits(ComboBox, _Component3);
 
-	    function ComboBox() {
-	        _classCallCheck(this, ComboBox);
+	  function ComboBox() {
+	    _classCallCheck(this, ComboBox);
 
-	        _get(Object.getPrototypeOf(ComboBox.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(ComboBox.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ComboBox, [{
+	    key: 'render',
+	    value: function render() {
+	      var optionsarray = this.props.dates.map(function (d) {
+	        return _react2['default'].createElement(
+	          'option',
+	          { key: d.val, value: d.val },
+	          d.lbl
+	        );
+	      });
+	      return _react2['default'].createElement(
+	        'select',
+	        { id: 'dates', onChange: this.props.onChange.bind(this) },
+	        optionsarray
+	      );
 	    }
+	  }]);
 
-	    _createClass(ComboBox, [{
-	        key: 'render',
-	        value: function render() {
-	            var optionsarray = this.props.dates.map(function (d) {
-	                return _react2['default'].createElement(
-	                    'option',
-	                    { key: d.val, value: d.val },
-	                    d.lbl
-	                );
-	            });
-	            return _react2['default'].createElement(
-	                'select',
-	                { id: 'dates', onChange: this.props.onChange.bind(this) },
-	                optionsarray
-	            );
-	        }
-	    }]);
-
-	    return ComboBox;
+	  return ComboBox;
 	})(_react.Component);
 
 	exports.ComboBox = ComboBox;
 
 	function getFilterValues(type) {
-	    var Gen = $('input[name=gen]:checked')[0];
-	    return {
-	        gen: [Gen.id],
-	        type: type,
-	        cat: $('input[name=cat]:checked')[0].id,
-	        geo: $('input[name=geo]:checked')[0].id,
-	        datatype: $('input[name=datatype]:checked')[0].id,
-	        year: $('#dates').val()
-	    };
+	  var Gen = $('input[name=gen]:checked')[0];
+	  return {
+	    gen: [Gen.id],
+	    type: type,
+	    cat: $('input[name=cat]:checked')[0].id,
+	    geo: $('input[name=geo]:checked')[0].id,
+	    datatype: $('input[name=datatype]:checked')[0].id,
+	    year: $('#dates').val()
+	  };
 	}
 
 	function yearsData(start, end) {
-	    var cmbData = [{ lbl: "select", val: 0 }];
-	    for (var i = start; i <= end; i++) cmbData.push({ lbl: i - 1 + "-" + i, val: i });
-	    return cmbData;
+	  var cmbData = [{ lbl: "select", val: 0 }];
+	  for (var i = start; i <= end; i++) cmbData.push({ lbl: i - 1 + "-" + i, val: i });
+	  return cmbData;
 	}
 
 	function getPreviousData(cattype, prop, data) {
-	    return _underscore2['default'].map(data, function (x) {
-	        return { "year": x["year"], "y": x[prop] };
-	    });
+	  return _underscore2['default'].map(data, function (x) {
+	    return { "year": x["year"], "y": x[prop] };
+	  });
 	}
 
 	function getPredictedData(sampledata, year) {
-	    var types = ["SC", "ST", "OBC", "OTHERS", "OVERALL"];
-	    var props = ["rural_male", "rural_female", "rural_person", "urban_male", "urban_female", "urban_person", "rural_urban_male", "rural_urban_female", "rural_urban_person"];
-	    var predictedData = [];
-	    _underscore2['default'].each(types, function (obj) {
-	        var transobj = { "caste": obj, "year": year };
-	        var dat = _underscore2['default'].filter(sampledata, function (d) {
-	            return d.caste === obj;
-	        });
-	        _underscore2['default'].each(props, function (k) {
-	            var preData = getPreviousData(obj, k, dat);
-	            var yval = getY(year, preData);
-	            transobj[k] = yval < 0 ? 0 : yval;
-	        });
-	        predictedData.push(transobj);
+	  var types = ["SC", "ST", "OBC", "OTHERS", "OVERALL"];
+	  var props = ["rural_male", "rural_female", "rural_person", "urban_male", "urban_female", "urban_person", "rural_urban_male", "rural_urban_female", "rural_urban_person"];
+	  var predictedData = [];
+	  _underscore2['default'].each(types, function (obj) {
+	    var transobj = { "caste": obj, "year": year };
+	    var dat = _underscore2['default'].filter(sampledata, function (d) {
+	      return d.caste === obj;
 	    });
-	    return predictedData;
+	    _underscore2['default'].each(props, function (k) {
+	      var preData = getPreviousData(obj, k, dat);
+	      var yval = getY(year, preData);
+	      transobj[k] = yval < 0 ? 0 : yval;
+	    });
+	    predictedData.push(transobj);
+	  });
+	  return predictedData;
 	}
 
 	var DataTable = (function (_Component4) {
-	    _inherits(DataTable, _Component4);
+	  _inherits(DataTable, _Component4);
 
-	    function DataTable() {
-	        _classCallCheck(this, DataTable);
+	  function DataTable() {
+	    _classCallCheck(this, DataTable);
 
-	        _get(Object.getPrototypeOf(DataTable.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(DataTable.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(DataTable, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $('.tablesaw').table();
+
+	      $('.dial').knob();
+	      $('.knob').knob({
+	        draw: function draw() {
+	          // 'tron' case
+	          if (this.$.data('skin') == 'tron') {
+	            var a = this.angle(this.cv),
+	                // Angle
+	            sa = this.startAngle,
+	                // Previous start angle
+	            sat = this.startAngle,
+	                // Start angle
+	            ea,
+	                // Previous end angle
+	            eat = sat + a,
+	                // End angle
+	            r = true;
+
+	            this.g.lineWidth = this.lineWidth;
+
+	            this.o.cursor && (sat = eat - 0.3) && (eat = eat + 0.3);
+
+	            if (this.o.displayPrevious) {
+	              ea = this.startAngle + this.angle(this.value);
+	              this.o.cursor && (sa = ea - 0.3) && (ea = ea + 0.3);
+	              this.g.beginPath();
+	              this.g.strokeStyle = this.previousColor;
+	              this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
+	              this.g.stroke();
+	            }
+
+	            this.g.beginPath();
+	            this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
+	            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
+	            this.g.stroke();
+
+	            this.g.lineWidth = 2;
+	            this.g.beginPath();
+	            this.g.strokeStyle = this.o.fgColor;
+	            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+	            this.g.stroke();
+
+	            return false;
+	          }
+	        }
+	      });
 	    }
-
-	    _createClass(DataTable, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            $('.tablesaw').table();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var rows = [];
-	            this.props.tabledata.forEach(function (dat) {
-	                rows.push(_react2['default'].createElement(Row, { data: dat }));
-	            });
-	            return _react2['default'].createElement(
-	                PanelContainer,
-	                { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var rows = [];
+	      this.props.tabledata.forEach(function (dat) {
+	        rows.push(_react2['default'].createElement(Row, { data: dat }));
+	      });
+	      return _react2['default'].createElement(
+	        PanelContainer,
+	        { noOverflow: true, controlStyles: 'bg-orange75 fg-white' },
+	        _react2['default'].createElement(
+	          Panel,
+	          null,
+	          _react2['default'].createElement(
+	            PanelHeader,
+	            { className: 'bg-orange75 fg-white center text-center' },
+	            _react2['default'].createElement(
+	              'h4',
+	              null,
+	              this.props.type
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            PanelBody,
+	            null,
+	            _react2['default'].createElement(
+	              Table,
+	              { striped: true, bordered: true, className: 'tablesaw' },
+	              _react2['default'].createElement(
+	                'thead',
+	                null,
 	                _react2['default'].createElement(
-	                    Panel,
+	                  'th',
+	                  null,
+	                  'Social Group'
+	                ),
+	                _react2['default'].createElement(
+	                  'th',
+	                  { colSpan: 3 },
+	                  'Rural'
+	                ),
+	                _react2['default'].createElement(
+	                  'th',
+	                  { colSpan: 3 },
+	                  'Urban'
+	                ),
+	                _react2['default'].createElement(
+	                  'th',
+	                  { colSpan: 3 },
+	                  'Rural+Urban'
+	                ),
+	                _react2['default'].createElement(
+	                  'tr',
+	                  null,
+	                  _react2['default'].createElement('th', null),
+	                  _react2['default'].createElement(
+	                    'th',
 	                    null,
-	                    _react2['default'].createElement(
-	                        PanelHeader,
-	                        { className: 'bg-orange75 fg-white center text-center' },
-	                        _react2['default'].createElement(
-	                            'h4',
-	                            null,
-	                            this.props.type
-	                        )
-	                    ),
-	                    _react2['default'].createElement(
-	                        PanelBody,
-	                        null,
-	                        _react2['default'].createElement(
-	                            Table,
-	                            { striped: true, bordered: true, className: 'tablesaw' },
-	                            _react2['default'].createElement(
-	                                'thead',
-	                                null,
-	                                _react2['default'].createElement(
-	                                    'th',
-	                                    null,
-	                                    'Social Group'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    'th',
-	                                    { colSpan: 3 },
-	                                    'Rural'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    'th',
-	                                    { colSpan: 3 },
-	                                    'Urban'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    'th',
-	                                    { colSpan: 3 },
-	                                    'Rural+Urban'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2['default'].createElement('th', null),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Male'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Female'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Person'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Male'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Female'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Person'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Male'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Female'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        'th',
-	                                        null,
-	                                        'Person'
-	                                    )
-	                                )
-	                            ),
-	                            _react2['default'].createElement(
-	                                'tbody',
-	                                null,
-	                                rows
-	                            )
-	                        )
-	                    )
+	                    'Male'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Female'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Person'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Male'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Female'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Person'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Male'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Female'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'th',
+	                    null,
+	                    'Person'
+	                  )
 	                )
-	            );
-	        }
-	    }]);
+	              ),
+	              _react2['default'].createElement(
+	                'tbody',
+	                null,
+	                rows
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 
-	    return DataTable;
+	  return DataTable;
 	})(_react.Component);
 
 	exports.DataTable = DataTable;
 
 	var Row = (function (_Component5) {
-	    _inherits(Row, _Component5);
+	  _inherits(Row, _Component5);
 
-	    function Row() {
-	        _classCallCheck(this, Row);
+	  function Row() {
+	    _classCallCheck(this, Row);
 
-	        _get(Object.getPrototypeOf(Row.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(Row.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Row, [{
+	    key: 'render',
+	    value: function render() {
+	      var d = this.props.data;
+	      return _react2['default'].createElement(
+	        'tr',
+	        null,
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          d.caste
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.rural_male
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.rural_female
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.rural_person
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.urban_male
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.urban_female
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.urban_person
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.rural_urban_male
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.rural_urban_female
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'td',
+	          null,
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'dataCell' },
+	            d.rural_urban_person
+	          )
+	        )
+	      );
 	    }
+	  }]);
 
-	    _createClass(Row, [{
-	        key: 'render',
-	        value: function render() {
-	            var d = this.props.data;
-	            return _react2['default'].createElement(
-	                'tr',
-	                null,
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    d.caste
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.rural_male
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.rural_female
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.rural_person
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.urban_male
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.urban_female
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.urban_person
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.rural_urban_male
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.rural_urban_female
-	                    )
-	                ),
-	                _react2['default'].createElement(
-	                    'td',
-	                    null,
-	                    _react2['default'].createElement(
-	                        'p',
-	                        { className: 'dataCell' },
-	                        d.rural_urban_person
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Row;
+	  return Row;
 	})(_react.Component);
 
 	exports.Row = Row;
 
 	function getChartType(chartType) {
-	    switch (chartType) {
-	        case "labour-rate":
-	            return "lfpr";
-	            break;
-	        case "worker-population":
-	            return "wpr";
-	            break;
-	        case "unemployment-rate":
-	            return "umr";
-	            break;
-	        default:
-	            return "pur";
-	    }
+	  switch (chartType) {
+	    case "labour-rate":
+	      return "lfpr";
+	      break;
+	    case "worker-population":
+	      return "wpr";
+	      break;
+	    case "unemployment-rate":
+	      return "umr";
+	      break;
+	    default:
+	      return "pur";
+	  }
 	}
 
 	function genYears(selyear, min) {
-	    var years = [];
-	    for (var i = min; i < selyear; i++) years.push(i);
-	    return years;
+	  var years = [];
+	  for (var i = min; i < selyear; i++) years.push(i);
+	  return years;
 	}
 
 	function getMinDateAndMaxDateInGivenData(data) {
-	    return [_underscore2['default'].min(data), _underscore2['default'].max(data)];
+	  return [_underscore2['default'].min(data), _underscore2['default'].max(data)];
 	}
 
 	function getPresentData(data, fvalues) {
-	    var cData = _underscore2['default'].filter(data, function (d) {
-	        return d.year <= fvalues.year && d.caste == fvalues.cat;
-	    });
-	    var sortedData = fvalues.datatype == "UPSS" || fvalues.cat == "OVERALL" ? cData : cData.sort(function (a) {
-	        return a.year;
-	    });
-	    var labels = [];
-	    var axisData = [];
-	    _underscore2['default'].each(sortedData, function (c) {
-	        labels.push(c.year.toString());
-	        axisData.push(c[fvalues.geo + "_" + fvalues.gen]);
-	    });
-	    return [_underscore2['default'].filter(data, function (d) {
-	        return d.year == fvalues.year;
-	    }), getData(labels, axisData)];
+	  var cData = _underscore2['default'].filter(data, function (d) {
+	    return d.year <= fvalues.year && d.caste == fvalues.cat;
+	  });
+	  var sortedData = fvalues.datatype == "UPSS" || fvalues.cat == "OVERALL" ? cData : cData.sort(function (a) {
+	    return a.year;
+	  });
+	  var labels = [];
+	  var axisData = [];
+	  _underscore2['default'].each(sortedData, function (c) {
+	    labels.push(c.year.toString());
+	    axisData.push(c[fvalues.geo + "_" + fvalues.gen]);
+	  });
+	  return [_underscore2['default'].filter(data, function (d) {
+	    return d.year == fvalues.year;
+	  }), getData(labels, axisData)];
 	}
 
 	function PredictData(data, fvalues) {
-	    var predictData = getPredictedData(data, fvalues.year);
-	    var eDataYears = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(data, function (d) {
-	        return d.year;
-	    }));
-	    var filteredData = _underscore2['default'].filter(data, function (d) {
-	        return d.caste == fvalues.cat;
-	    });
-	    var fdata = fvalues.datatype == "UPSS" || fvalues.cat == "OVERALL" ? _underscore2['default'].map(filteredData, function (x) {
-	        return { "year": x.year, "y": x[fvalues.geo + '_' + fvalues.gen] };
-	    }) : _underscore2['default'].map(filteredData.sort(function (i) {
-	        return i.year;
-	    }), function (x) {
-	        return { "year": x.year, "y": x[fvalues.geo + '_' + fvalues.gen] };
-	    });
-	    var xmean = mean(fdata, "year");
-	    var ymean = mean(fdata, "y");
-	    var b1 = b(xmean, ymean, fdata);
-	    var a1 = a(xmean, ymean, b1);
-	    var labels = _underscore2['default'].map(fdata, function (d) {
-	        return d.year.toString();
-	    });
-	    var axisdata = _underscore2['default'].map(fdata, function (d) {
-	        return d.y;
-	    });
-	    for (var i = eDataYears[1] + 1; i <= fvalues.year; i++) {
-	        labels.push(i.toString());
-	        var yval = y1(a1, b1, i);
-	        axisdata.push(yval < 0 ? 0 : yval);
-	    }
-	    return [predictData, getData(labels, axisdata)];
+	  var predictData = getPredictedData(data, fvalues.year);
+	  var eDataYears = getMinDateAndMaxDateInGivenData(_underscore2['default'].map(data, function (d) {
+	    return d.year;
+	  }));
+	  var filteredData = _underscore2['default'].filter(data, function (d) {
+	    return d.caste == fvalues.cat;
+	  });
+	  var fdata = fvalues.datatype == "UPSS" || fvalues.cat == "OVERALL" ? _underscore2['default'].map(filteredData, function (x) {
+	    return { "year": x.year, "y": x[fvalues.geo + '_' + fvalues.gen] };
+	  }) : _underscore2['default'].map(filteredData.sort(function (i) {
+	    return i.year;
+	  }), function (x) {
+	    return { "year": x.year, "y": x[fvalues.geo + '_' + fvalues.gen] };
+	  });
+	  var xmean = mean(fdata, "year");
+	  var ymean = mean(fdata, "y");
+	  var b1 = b(xmean, ymean, fdata);
+	  var a1 = a(xmean, ymean, b1);
+	  var labels = _underscore2['default'].map(fdata, function (d) {
+	    return d.year.toString();
+	  });
+	  var axisdata = _underscore2['default'].map(fdata, function (d) {
+	    return d.y;
+	  });
+	  for (var i = eDataYears[1] + 1; i <= fvalues.year; i++) {
+	    labels.push(i.toString());
+	    var yval = y1(a1, b1, i);
+	    axisdata.push(yval < 0 ? 0 : yval);
+	  }
+	  return [predictData, getData(labels, axisdata)];
 	}
 
 	function barChartData(data) {
-	    var datasets = [];
-	    var bsettings = barSettings();
-	    var labels = ["rural", "urban", "rural_urban"];
-	    var casts = ["SC", "ST", "OBC", "OTHERS"];
-	    var gen = ["male", "female", "person"];
-	    _underscore2['default'].each(casts, function (c) {
-	        var catobj = _underscore2['default'].find(data, function (x) {
-	            return x.caste == c;
-	        });
-	        _underscore2['default'].each(gen, function (g) {
-	            var data = [];
-	            _underscore2['default'].each(labels, function (l) {
-	                data.push(catobj[l + "_" + g]);
-	            });
-	            datasets.push(createDataObj(bsettings[c + '-' + g], data));
-	        });
+	  var datasets = [];
+	  var bsettings = barSettings();
+	  var labels = ["rural", "urban", "rural_urban"];
+	  var casts = ["SC", "ST", "OBC", "OTHERS"];
+	  var gen = ["male", "female", "person"];
+	  _underscore2['default'].each(casts, function (c) {
+	    var catobj = _underscore2['default'].find(data, function (x) {
+	      return x.caste == c;
 	    });
+	    _underscore2['default'].each(gen, function (g) {
+	      var data = [];
+	      _underscore2['default'].each(labels, function (l) {
+	        data.push(catobj[l + "_" + g]);
+	      });
+	      datasets.push(createDataObj(bsettings[c + '-' + g], data));
+	    });
+	  });
 
-	    return {
-	        labels: ["Rural", "Urban", "Rural + Urban"],
-	        datasets: datasets
-	    };
+	  return {
+	    labels: ["Rural", "Urban", "Rural + Urban"],
+	    datasets: datasets
+	  };
 	}
 
 	function createDataObj(csettings, data) {
 
-	    return {
-	        label: csettings[0],
-	        fillColor: csettings[1],
-	        strokeColor: csettings[2],
-	        highlightFill: csettings[3],
-	        highlightStroke: csettings[4],
-	        data: data
-	    };
+	  return {
+	    label: csettings[0],
+	    fillColor: csettings[1],
+	    strokeColor: csettings[2],
+	    highlightFill: csettings[3],
+	    highlightStroke: csettings[4],
+	    data: data
+	  };
 	}
 
 	function barSettings() {
-	    return {
-	        "SC-person": ["SC-Person", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)"],
-	        "ST-person": ["ST-Person", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)"],
-	        "OBC-person": ["OBC-Person", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)"],
-	        "OTHERS-person": ["OTHERS-Person", "rgb(255,237,111)", "rgb(255,237,111)", "rgb(255,237,111)", "rgb(255,237,111)"],
-	        "SC-male": ["SC-Male", "rgb(141,211,199)", "rgb(141,211,199)", "rgb(141,211,199)", "rgb(141,211,199)"],
-	        "SC-female": ["SC-Female", "rgb(251,180,174)", "rgb(251,180,174)", "rgb(251,180,174)", "rgb(251,180,174)"],
-	        "ST-male": ["ST-Male", "rgb(251,128,114)", "rgb(251,128,114) ", "rgb(251,128,114) ", "rgb(251,128,114)"],
-	        "ST-female": ["ST-Female", "rgb(128,177,211)", "rgb(128,177,211)", "rgb(128,177,211)", "rgb(128,177,211)"],
-	        "OBC-male": ["OBC-Male", "rgb(179,222,105)", "rgb(179,222,105)", "rgb(179,222,105)", "rgb(179,222,105)"],
-	        "OBC-female": ["OBC-Female", "rgb(252,205,229)", "rgb(252,205,229)", "rgb(252,205,229)", "rgb(252,205,229)"],
-	        "OTHERS-male": ["Others-Male", "rgb(188,128,189)", "rgb(188,128,189)", "rgb(188,128,189)", "rgb(188,128,189)"],
-	        "OTHERS-female": ["Others-Female", "rgb(204,235,197)", "rgb(204,235,197)", "rgb(204,235,197)", "rgb(204,235,197)"]
-	    };
+	  return {
+	    "SC-person": ["SC-Person", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)"],
+	    "ST-person": ["ST-Person", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)"],
+	    "OBC-person": ["OBC-Person", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)"],
+	    "OTHERS-person": ["OTHERS-Person", "rgb(255,237,111)", "rgb(255,237,111)", "rgb(255,237,111)", "rgb(255,237,111)"],
+	    "SC-male": ["SC-Male", "rgb(141,211,199)", "rgb(141,211,199)", "rgb(141,211,199)", "rgb(141,211,199)"],
+	    "SC-female": ["SC-Female", "rgb(251,180,174)", "rgb(251,180,174)", "rgb(251,180,174)", "rgb(251,180,174)"],
+	    "ST-male": ["ST-Male", "rgb(251,128,114)", "rgb(251,128,114) ", "rgb(251,128,114) ", "rgb(251,128,114)"],
+	    "ST-female": ["ST-Female", "rgb(128,177,211)", "rgb(128,177,211)", "rgb(128,177,211)", "rgb(128,177,211)"],
+	    "OBC-male": ["OBC-Male", "rgb(179,222,105)", "rgb(179,222,105)", "rgb(179,222,105)", "rgb(179,222,105)"],
+	    "OBC-female": ["OBC-Female", "rgb(252,205,229)", "rgb(252,205,229)", "rgb(252,205,229)", "rgb(252,205,229)"],
+	    "OTHERS-male": ["Others-Male", "rgb(188,128,189)", "rgb(188,128,189)", "rgb(188,128,189)", "rgb(188,128,189)"],
+	    "OTHERS-female": ["Others-Female", "rgb(204,235,197)", "rgb(204,235,197)", "rgb(204,235,197)", "rgb(204,235,197)"]
+	  };
 	}
 
 /***/ },
@@ -13196,6 +13268,997 @@
 
 /***/ },
 /* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _reactRouter = __webpack_require__(3);
+
+	var _classnames = __webpack_require__(37);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _globalJsxSidebar_component = __webpack_require__(38);
+
+	var _globalJsxSidebar_component2 = _interopRequireDefault(_globalJsxSidebar_component);
+
+	var _commonHeader = __webpack_require__(39);
+
+	var _commonHeader2 = _interopRequireDefault(_commonHeader);
+
+	var _commonSidebar = __webpack_require__(40);
+
+	var _commonSidebar2 = _interopRequireDefault(_commonSidebar);
+
+	var _commonFooter = __webpack_require__(42);
+
+	var _commonFooter2 = _interopRequireDefault(_commonFooter);
+
+	var _commonPopulationforecast = __webpack_require__(62);
+
+	var _reactChartjs = __webpack_require__(44);
+
+	var Body = (function (_React$Component) {
+	    _inherits(Body, _React$Component);
+
+	    function Body() {
+	        _classCallCheck(this, Body);
+
+	        _get(Object.getPrototypeOf(Body.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(Body, [{
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                Container,
+	                { id: 'body' },
+	                React.createElement(
+	                    Grid,
+	                    null,
+	                    React.createElement(
+	                        Row,
+	                        null,
+	                        React.createElement(
+	                            Col,
+	                            { sm: 12 },
+	                            React.createElement(
+	                                TabContainer,
+	                                null,
+	                                React.createElement(
+	                                    TabList,
+	                                    { bsStyle: 'orange75', onTabSelect: this.handleSelect },
+	                                    React.createElement(
+	                                        Tab,
+	                                        { pane: 'tab1', active: true },
+	                                        'Labour Force Population'
+	                                    ),
+	                                    React.createElement(
+	                                        Tab,
+	                                        { pane: 'tab2' },
+	                                        'Worker Population'
+	                                    ),
+	                                    React.createElement(
+	                                        Tab,
+	                                        { pane: 'tab3' },
+	                                        'Un-Employment Persons'
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    TabContent,
+	                                    null,
+	                                    React.createElement(
+	                                        TabPane,
+	                                        null,
+	                                        React.createElement(_commonPopulationforecast.PopulationChart, { bdata: { labels: ["rural", "urban", "rural_urban"], datasets: [{}] }, paramType: "lfp", title: "Labour Force Participation Rate", data: {
+	                                                labels: ["January", "February", "March", "April", "May", "June", "July"],
+	                                                datasets: [{}] } })
+	                                    ),
+	                                    React.createElement(
+	                                        TabPane,
+	                                        null,
+	                                        React.createElement(_commonPopulationforecast.PopulationChart, { bdata: {
+	                                                labels: ["rural", "urban", "rural_urban"],
+	                                                datasets: [{}]
+	                                            }, paramType: "wp", title: "Worker Population Ratio", data: {
+	                                                labels: ["January", "February", "March", "April", "May", "June", "July"],
+	                                                datasets: [{}] } })
+	                                    ),
+	                                    React.createElement(
+	                                        TabPane,
+	                                        null,
+	                                        React.createElement(_commonPopulationforecast.PopulationChart, { bdata: {
+	                                                labels: ["rural", "urban", "rural_urban"],
+	                                                datasets: [{}]
+	                                            }, paramType: "ump", title: "Unemployment Rate", data: {
+	                                                labels: ["January", "February", "March", "April", "May", "June", "July"],
+	                                                datasets: [{}] } })
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Body;
+	})(React.Component);
+
+	var _default = (function (_React$Component2) {
+	    _inherits(_default, _React$Component2);
+
+	    function _default() {
+	        _classCallCheck(this, _default2);
+
+	        _get(Object.getPrototypeOf(_default2.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(_default, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var classes = (0, _classnames2['default'])({
+	                'container-open': this.props.open
+	            });
+
+	            return React.createElement(
+	                Container,
+	                { id: 'container', className: classes },
+	                React.createElement(_commonSidebar2['default'], null),
+	                React.createElement(_commonHeader2['default'], null),
+	                React.createElement(Body, null),
+	                React.createElement(_commonFooter2['default'], null)
+	            );
+	        }
+	    }]);
+
+	    var _default2 = _default;
+	    _default = (0, _globalJsxSidebar_component2['default'])(_default) || _default;
+	    return _default;
+	})(React.Component);
+
+	exports['default'] = _default;
+	module.exports = exports['default'];
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactChartjs = __webpack_require__(44);
+
+	var _underscore = __webpack_require__(54);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function R(decadeSYearValue, decadeEYearValue) {
+	    return (decadeEYearValue / decadeSYearValue - 1) * 100;
+	}
+
+	function projectedValue(R, D, previouYearVal) {
+	    return previouYearVal * Math.pow(1 + R / 100, D / 120);
+	}
+
+	function diff(selYear, decadeEndYear) {
+	    return (selYear - decadeEndYear) * 12;
+	}
+
+	function decadeYears(data) {
+	    return [data[0].year, data[1].year];
+	}
+
+	function yearsData(start, end) {
+	    var cmbData = [{ lbl: "select", val: 0 }];
+	    for (var i = start; i <= end; i++) cmbData.push({ lbl: i - 1 + "-" + i, val: i });
+	    return cmbData;
+	}
+
+	var labels = ["rural_male", "rural_female", "urban_male", "urban_female"];
+
+	var options = { bezierCurve: false, datasetFill: false, pointDot: false };
+	var barOptions = { inGraphDataShow: true, showTooltips: false,
+	    onAnimationComplete: function onAnimationComplete() {
+	        var ctx = this.chart.ctx;
+	        ctx.font = this.scale.font;
+	        ctx.fillStyle = this.scale.textColor;
+	        ctx.textAlign = "center";
+	        ctx.textBaseline = "bottom";
+
+	        this.datasets.forEach(function (dataset) {
+	            dataset.bars.forEach(function (bar) {
+	                ctx.fillText(bar.value, bar.x, bar.y - 5);
+	            });
+	        });
+	    } };
+
+	var PopulationChart = (function (_Component) {
+	    _inherits(PopulationChart, _Component);
+
+	    function PopulationChart(props) {
+	        _classCallCheck(this, PopulationChart);
+
+	        _get(Object.getPrototypeOf(PopulationChart.prototype), 'constructor', this).call(this, props);
+	        this.state = { data: props.data, tdata: [], bdata: props.bdata };
+	    }
+
+	    _createClass(PopulationChart, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            $('#dates').val(2012);
+	            var fvalues = getFilterValues();
+	            $.ajax({
+	                url: "http://localhost:8091/all",
+	                dataType: 'json',
+	                success: (function (data) {
+	                    var arr = [];
+	                    var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function (o) {
+	                        return o.year;
+	                    }));
+	                    var opData;
+	                    if (fvalues.year <= minandmaxdatadates[1]) {
+	                        var lpf = _underscore2['default'].filter(data.lfp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        lpf.paramType = "Labour Force";
+	                        arr.push(lpf);
+	                        var wp = _underscore2['default'].filter(data.wp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        wp.paramType = "Workers";
+	                        arr.push(wp);
+	                        var ump = _underscore2['default'].filter(data.ump, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        ump.paramType = "Unemployed Persons";
+	                        arr.push(ump);
+	                        opData = getPresentData(arr, data.decade, fvalues.year, data[this.props.paramType].filter(function (l) {
+	                            return l.type == "UPS" && l.year <= fvalues.year;
+	                        }), fvalues);
+	                        console.log(opData[0]);
+	                        this.setState({ tdata: opData[0], data: opData[1], bdata: barChartData(arr) });
+	                    } else {
+	                        var years = genYears(fvalues.year, minandmaxdatadates[0]);
+	                        years.push(parseInt(fvalues.year));
+	                        var preData = predictedData(years, data, fvalues, this.props.paramType, minandmaxdatadates);
+	                        this.setState({ tdata: preData[0], data: preData[1], bdata: barChartData(preData[0]) });
+	                    }
+	                }).bind(this),
+	                error: (function (xhr, status, err) {
+	                    console.log(xhr);
+	                    console.error(this.props.url, status, err.toString());
+	                }).bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'handleDataType',
+	        value: function handleDataType() {
+	            var fvalues = getFilterValues();
+	            $.ajax({
+	                url: "http://localhost:8091/all",
+	                dataType: 'json',
+	                success: (function (data) {
+	                    var arr = [];
+	                    var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function (o) {
+	                        return o.year;
+	                    }));
+	                    var opData;
+	                    if (fvalues.year <= minandmaxdatadates[1]) {
+	                        var lpf = _underscore2['default'].filter(data.lfp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        lpf.paramType = "Labour Force";
+	                        arr.push(lpf);
+	                        var wp = _underscore2['default'].filter(data.wp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        wp.paramType = "Workers";
+	                        arr.push(wp);
+	                        var ump = _underscore2['default'].filter(data.ump, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        ump.paramType = "Unemployed Persons";
+	                        arr.push(ump);
+	                        opData = getPresentData(arr, data.decade, fvalues.year, data[this.props.paramType].filter(function (l) {
+	                            return l.type == "UPS" && l.year <= fvalues.year;
+	                        }), fvalues);
+	                        console.log(opData[0]);
+	                        this.setState({ tdata: opData[0], data: opData[1], bdata: barChartData(arr) });
+	                    } else {
+	                        var years = genYears(fvalues.year, minandmaxdatadates[0]);
+	                        years.push(parseInt(fvalues.year));
+	                        var preData = predictedData(years, data, fvalues, this.props.paramType, minandmaxdatadates);
+	                        this.setState({ tdata: preData[0], data: preData[1], bdata: barChartData(preData[0]) });
+	                    }
+	                }).bind(this),
+	                error: (function (xhr, status, err) {
+	                    console.log(xhr);
+	                    console.error(this.props.url, status, err.toString());
+	                }).bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'onChange',
+	        value: function onChange() {
+	            var fvalues = getFilterValues();
+	            $.ajax({
+	                url: "http://localhost:8091/all",
+	                dataType: 'json',
+	                success: (function (data) {
+	                    var arr = [];
+	                    var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function (o) {
+	                        return o.year;
+	                    }));
+	                    var opData;
+	                    if (fvalues.year <= minandmaxdatadates[1]) {
+	                        var lpf = _underscore2['default'].filter(data.lfp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        lpf.paramType = "Labour Force";
+	                        arr.push(lpf);
+	                        var wp = _underscore2['default'].filter(data.wp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        wp.paramType = "Workers";
+	                        arr.push(wp);
+	                        var ump = _underscore2['default'].filter(data.ump, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        ump.paramType = "Unemployed Persons";
+	                        arr.push(ump);
+	                        opData = getPresentData(arr, data.decade, fvalues.year, data[this.props.paramType].filter(function (l) {
+	                            return l.type == "UPS" && l.year <= fvalues.year;
+	                        }), fvalues);
+	                        console.log(opData[0]);
+	                        this.setState({ tdata: opData[0], data: opData[1], bdata: barChartData(arr) });
+	                    } else {
+	                        var years = genYears(fvalues.year, minandmaxdatadates[0]);
+	                        years.push(parseInt(fvalues.year));
+	                        var preData = predictedData(years, data, fvalues, this.props.paramType, minandmaxdatadates);
+	                        this.setState({ tdata: preData[0], data: preData[1], bdata: barChartData(preData[0]) });
+	                    }
+	                }).bind(this),
+	                error: (function (xhr, status, err) {
+	                    console.log(xhr);
+	                    console.error(this.props.url, status, err.toString());
+	                }).bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'genderHandle',
+	        value: function genderHandle() {
+	            var fvalues = getFilterValues();
+	            $.ajax({
+	                url: "http://localhost:8091/all",
+	                dataType: 'json',
+	                success: (function (data) {
+	                    var arr = [];
+	                    var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function (o) {
+	                        return o.year;
+	                    }));
+	                    var opData;
+	                    if (fvalues.year <= minandmaxdatadates[1]) {
+	                        var lpf = _underscore2['default'].filter(data.lfp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        lpf.paramType = "Labour Force";
+	                        arr.push(lpf);
+	                        var wp = _underscore2['default'].filter(data.wp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        wp.paramType = "Workers";
+	                        arr.push(wp);
+	                        var ump = _underscore2['default'].filter(data.ump, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        ump.paramType = "Unemployed Persons";
+	                        arr.push(ump);
+	                        opData = getPresentData(arr, data.decade, fvalues.year, data[this.props.paramType].filter(function (l) {
+	                            return l.type == "UPS" && l.year <= fvalues.year;
+	                        }), fvalues);
+	                        console.log(opData[0]);
+	                        this.setState({ tdata: opData[0], data: opData[1], bdata: barChartData(arr) });
+	                    } else {
+	                        var years = genYears(fvalues.year, minandmaxdatadates[0]);
+	                        years.push(parseInt(fvalues.year));
+	                        var preData = predictedData(years, data, fvalues, this.props.paramType, minandmaxdatadates);
+	                        this.setState({ tdata: preData[0], data: preData[1], bdata: barChartData(preData[0]) });
+	                    }
+	                }).bind(this),
+	                error: (function (xhr, status, err) {
+	                    console.log(xhr);
+	                    console.error(this.props.url, status, err.toString());
+	                }).bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'geoHandle',
+	        value: function geoHandle() {
+	            var fvalues = getFilterValues();
+	            $.ajax({
+	                url: "http://localhost:8091/all",
+	                dataType: 'json',
+	                success: (function (data) {
+	                    var arr = [];
+	                    var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function (o) {
+	                        return o.year;
+	                    }));
+	                    var opData;
+	                    if (fvalues.year <= minandmaxdatadates[1]) {
+	                        var lpf = _underscore2['default'].filter(data.lfp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        lpf.paramType = "Labour Force";
+	                        arr.push(lpf);
+	                        var wp = _underscore2['default'].filter(data.wp, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        wp.paramType = "Workers";
+	                        arr.push(wp);
+	                        var ump = _underscore2['default'].filter(data.ump, function (x) {
+	                            return x.year == fvalues.year && x.type == fvalues.datatype;
+	                        })[0];
+	                        ump.paramType = "Unemployed Persons";
+	                        arr.push(ump);
+	                        opData = getPresentData(arr, data.decade, fvalues.year, data[this.props.paramType].filter(function (l) {
+	                            return l.type == "UPS" && l.year <= fvalues.year;
+	                        }), fvalues);
+	                        console.log(opData[0]);
+	                        this.setState({ tdata: opData[0], data: opData[1], bdata: barChartData(arr) });
+	                    } else {
+	                        var years = genYears(fvalues.year, minandmaxdatadates[0]);
+	                        years.push(parseInt(fvalues.year));
+	                        var preData = predictedData(years, data, fvalues, this.props.paramType, minandmaxdatadates);
+	                        this.setState({ tdata: preData[0], data: preData[1], bdata: barChartData(preData[0]) });
+	                    }
+	                }).bind(this),
+	                error: (function (xhr, status, err) {
+	                    console.log(xhr);
+	                    console.error(this.props.url, status, err.toString());
+	                }).bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement(Filter, { handleDataType: this.handleDataType.bind(this),
+	                    data: this.state.data, tdata: this.state.tdata,
+	                    genderHandle: this.genderHandle.bind(this), geoHandle: this.geoHandle.bind(this) }),
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement(ComboBox, { dates: yearsData(2012, 2030), onChange: this.onChange.bind(this), tdata: this.state.tabledata }),
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement(_reactChartjs.Line, { id: 'chart', data: this.state.data, options: options, width: '600', height: '250', redraw: true }),
+	                _react2['default'].createElement(_reactChartjs.Bar, { id: 'bchart', data: this.state.bdata, options: barOptions, width: '600', height: '250', redraw: true }),
+	                _react2['default'].createElement('div', { id: 'legend' }),
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement(DataTable, { tabledata: this.state.tdata })
+	            );
+	        }
+	    }]);
+
+	    return PopulationChart;
+	})(_react.Component);
+
+	exports.PopulationChart = PopulationChart;
+
+	function getData(labeldata, dataarray) {
+	    return { labels: labeldata,
+	        datasets: [{
+	            label: "original",
+	            fillColor: "rgba(220,220,220,0.2)",
+	            strokeColor: "rgba(220,220,220,1)",
+	            pointColor: "rgba(220,220,220,1)",
+	            pointStrokeColor: "#fff",
+	            pointHighlightFill: "#fff",
+	            pointHighlightStroke: "rgba(220,220,220,1)",
+	            data: dataarray
+	        }] };
+	}
+
+	function getPresentData(data, decadeData, selYear, allYearsData, fvalues) {
+	    var df = diff(selYear, decadeData[1].year);
+	    var obj = { paramType: "Projected Population as on " + selYear };
+	    _underscore2['default'].each(labels, function (l) {
+	        obj[l] = parseInt(projectedValue(R(decadeData[0][l], decadeData[1][l]).toFixed(3), df, decadeData[1][l]).toFixed(0));
+	    });
+	    obj["rural_person"] = obj.rural_male + obj.rural_female;
+	    obj["urban_person"] = obj.urban_male + obj.urban_female;
+	    obj["rural_urban_person"] = obj["urban_person"] + obj["rural_person"];
+	    obj["rural_urban_male"] = obj["urban_male"] + obj["rural_male"];
+	    obj["rural_urban_female"] = obj["urban_female"] + obj["rural_female"];
+	    data.push(obj);
+	    var lchartData = getLineChartData(allYearsData, fvalues);
+	    return [data, getData(lchartData[0], lchartData[1])];
+	}
+
+	var Filter = (function (_Component2) {
+	    _inherits(Filter, _Component2);
+
+	    function Filter() {
+	        _classCallCheck(this, Filter);
+
+	        _get(Object.getPrototypeOf(Filter.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(Filter, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement(
+	                    'div',
+	                    null,
+	                    _react2['default'].createElement('input', { id: 'male', type: 'radio', onClick: this.props.genderHandle.bind(this), name: 'gen' }),
+	                    'Male',
+	                    _react2['default'].createElement('input', { id: 'female', type: 'radio', onClick: this.props.genderHandle.bind(this), name: 'gen' }),
+	                    'Female',
+	                    _react2['default'].createElement('input', { id: 'person', type: 'radio', name: 'gen', onClick: this.props.genderHandle.bind(this), defaultChecked: 'true' }),
+	                    'Persons'
+	                ),
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement(
+	                    'div',
+	                    null,
+	                    _react2['default'].createElement('input', { id: 'rural', type: 'radio', onClick: this.props.geoHandle.bind(this), defaultChecked: 'true', name: 'geo' }),
+	                    'Rural',
+	                    _react2['default'].createElement('input', { id: 'urban', type: 'radio', onClick: this.props.geoHandle.bind(this), name: 'geo' }),
+	                    'Urban',
+	                    _react2['default'].createElement('input', { id: 'rural_urban', type: 'radio', onClick: this.props.geoHandle.bind(this), name: 'geo' }),
+	                    'Rural+Urban'
+	                ),
+	                _react2['default'].createElement('br', null),
+	                _react2['default'].createElement(
+	                    'div',
+	                    null,
+	                    _react2['default'].createElement('input', { id: 'UPS', type: 'radio', onClick: this.props.handleDataType.bind(this), name: 'datatype', defaultChecked: 'true' }),
+	                    'UPS',
+	                    _react2['default'].createElement('input', { id: 'UPSS', type: 'radio', onClick: this.props.handleDataType.bind(this), name: 'datatype' }),
+	                    'UPSS'
+	                ),
+	                _react2['default'].createElement('br', null)
+	            );
+	        }
+	    }]);
+
+	    return Filter;
+	})(_react.Component);
+
+	exports.Filter = Filter;
+
+	var ComboBox = (function (_Component3) {
+	    _inherits(ComboBox, _Component3);
+
+	    function ComboBox() {
+	        _classCallCheck(this, ComboBox);
+
+	        _get(Object.getPrototypeOf(ComboBox.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(ComboBox, [{
+	        key: 'render',
+	        value: function render() {
+	            var optionsarray = this.props.dates.map(function (d) {
+	                return _react2['default'].createElement(
+	                    'option',
+	                    { key: d.val, value: d.val },
+	                    d.lbl
+	                );
+	            });
+	            return _react2['default'].createElement(
+	                'select',
+	                { id: 'dates', onChange: this.props.onChange.bind(this) },
+	                optionsarray
+	            );
+	        }
+	    }]);
+
+	    return ComboBox;
+	})(_react.Component);
+
+	exports.ComboBox = ComboBox;
+
+	var DataTable = (function (_Component4) {
+	    _inherits(DataTable, _Component4);
+
+	    function DataTable() {
+	        _classCallCheck(this, DataTable);
+
+	        _get(Object.getPrototypeOf(DataTable.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(DataTable, [{
+	        key: 'render',
+	        value: function render() {
+	            var rows = [];
+	            this.props.tabledata.forEach(function (dat) {
+	                rows.push(_react2['default'].createElement(Row, { data: dat }));
+	            });
+	            return _react2['default'].createElement(
+	                'table',
+	                { cellSpacing: 0, style: { border: '1px solid #900', bordercollapse: 'collaps' }, cellPadding: 0, border: 1 },
+	                _react2['default'].createElement(
+	                    'thead',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'tr',
+	                        null,
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Social Group'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Rural Male'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Rural Female'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Rural Person'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Urban Male'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Urban Female'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Urban Person'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Total Male'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Total Female'
+	                        ),
+	                        _react2['default'].createElement(
+	                            'td',
+	                            null,
+	                            'Total Person'
+	                        )
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'tbody',
+	                    null,
+	                    rows
+	                )
+	            );
+	        }
+	    }]);
+
+	    return DataTable;
+	})(_react.Component);
+
+	exports.DataTable = DataTable;
+
+	var Row = (function (_Component5) {
+	    _inherits(Row, _Component5);
+
+	    function Row() {
+	        _classCallCheck(this, Row);
+
+	        _get(Object.getPrototypeOf(Row.prototype), 'constructor', this).apply(this, arguments);
+	    }
+
+	    _createClass(Row, [{
+	        key: 'render',
+	        value: function render() {
+	            var d = this.props.data;
+	            return _react2['default'].createElement(
+	                'tr',
+	                null,
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    d.paramType
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.rural_male
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.rural_female
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.rural_person
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.urban_male
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.urban_female
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.urban_person
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.rural_urban_male
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.rural_urban_female
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'p',
+	                        { className: 'dataCell' },
+	                        d.rural_urban_person
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Row;
+	})(_react.Component);
+
+	exports.Row = Row;
+
+	function createDataObj(csettings, data) {
+	    return {
+	        label: csettings[0],
+	        fillColor: csettings[1],
+	        strokeColor: csettings[2],
+	        highlightFill: csettings[3],
+	        highlightStroke: csettings[4],
+	        data: data
+	    };
+	}
+
+	function barSettings() {
+	    return {
+	        "Labour Force-person": ["SC-Person", "rgba(220,220,220,0.5)", "rgba(220,220,220,0.8)", "rgba(220,220,220,0.75)", "rgba(220,220,220,1)"],
+	        "Workers-person": ["ST-Person", "rgba(151,187,205,0.5)", "rgba(151,187,205,0.8)", "rgba(151,187,205,0.75)", "rgba(151,187,205,1)"],
+	        "Unemployed Persons-person": ["OBC-Person", "rgba(128,0,0,0.5)", "rgba(128,0,0,0.8)", "rgba(128,0,0,0.75)", "rgba(128,0,0,1)"],
+	        "Labour Force-male": ["SC-Male", "rgba(204,229,255,0.5)", "rgba(204,229,255,0.8)", "rgba(204,229,255,0.75)", "rgba(204,229,255,1)"],
+	        "Labour Force-female": ["SC-Female", "rgba(204,204,255,0.5)", "rgba(204,204,255,0.8)", "rgba(204,204,255,0.75)", "rgba(204,204,255,1)"],
+	        "Workers-male": ["ST-Male", "rgba(204,229,255,0.5)", "rgba(204,229,255,0.8)", "rgba(204,229,255,0.75)", "rgba(204,229,255,1)"],
+	        "Workers-female": ["ST-Female", "rgba(255,204,255,0.5)", "rgba(255,204,255,0.8)", "rgba(255,204,255,0.75)", "rgba(255,204,255,1)"],
+	        "Unemployed Persons-male": ["OBC-Male", "rgba(102,178,255,0.5)", "rgba(102,178,255,0.8)", "rgba(102,178,255,0.75)", "rgba(102,178,255,1)"],
+	        "Unemployed Persons-female": ["OBC-Female", "rgba(51,153,255,0.5)", "rgba(51,153,255,0.8)", "rgba(51,153,255,0.75)", "rgba(51,153,255,1)"]
+	    };
+	}
+	function getChartType(chartType) {
+	    switch (chartType) {
+	        case "labour-rate":
+	            return "lfpr";
+	            break;
+	        case "worker-population":
+	            return "wpr";
+	            break;
+	        case "unemployment-rate":
+	            return "umr";
+	            break;
+	        default:
+	            return "pur";
+	    }
+	}
+
+	function genYears(selyear, min) {
+	    var years = [];
+	    for (var i = min; i < selyear; i++) years.push(i);
+	    return years;
+	}
+
+	function getFilterValues() {
+	    var Gen = $('input[name=gen]:checked')[0];
+	    var Types = $('input[name=charttype]:checked')[0];
+	    return {
+	        gen: [Gen.id],
+	        geo: $('input[name=geo]:checked')[0].id,
+	        datatype: $('input[name=datatype]:checked')[0].id,
+	        year: $('#dates').val()
+	    };
+	}
+
+	function getLineChartData(previousData, fvalues) {
+	    var labels = [];
+	    var axisData = [];
+	    _underscore2['default'].each(previousData, function (c) {
+	        labels.push(c.year.toString());
+	        axisData.push(c[fvalues.geo + '_' + fvalues.gen]);
+	    });
+	    return [labels, axisData];
+	}
+
+	function barChartData(data) {
+	    var datasets = [];
+	    var bsettings = barSettings();
+	    var labels = ["rural", "urban", "rural_urban"];
+	    var paramTypes = ["Labour Force", "Workers", "Unemployed Persons"];
+	    var gen = ["male", "female", "person"];
+	    _underscore2['default'].each(paramTypes, function (p) {
+	        var catobj = _underscore2['default'].find(data, function (x) {
+	            return x.paramType == p;
+	        });
+	        _underscore2['default'].each(gen, function (g) {
+	            var data = [];
+	            _underscore2['default'].each(labels, function (l) {
+	                data.push(catobj[l + "_" + g]);
+	            });
+	            datasets.push(createDataObj(bsettings[p + '-' + g], data));
+	        });
+	    });
+	    return {
+	        labels: labels,
+	        datasets: datasets
+	    };
+	}
+	function getMinDateAndMaxDateInGivenData(data) {
+	    return [_underscore2['default'].min(data), _underscore2['default'].max(data)];
+	}
+
+	function predictedData(years, data, fvalues, paramType, minMaxDates) {
+	    var labels = [];
+	    var lineChartData = [];
+	    var maxYearData = _underscore2['default'].filter(data[paramType], function (data) {
+	        return data.year == minMaxDates[1] && data.type == fvalues.datatype;
+	    })[0];
+	    _underscore2['default'].each(years, function (d) {
+
+	        if (d <= minMaxDates[1]) {
+	            labels.push(d.toString());
+	            lineChartData.push(_underscore2['default'].filter(data[paramType], function (data) {
+	                return data.year == d && data.type == fvalues.datatype;
+	            })[0][fvalues.geo + '_' + fvalues.gen]);
+	        } else {
+
+	            labels.push(d.toString());
+	            var projData = fvalues.geo == 'rural_urban' ? fvalues.gen == 'person' ? parseInt(projectedValue(R(data.decade[0]['rural' + '_' + 'male'], data.decade[1]['rural' + '_' + 'male']).toFixed(3), diff(d, minMaxDates[1]), maxYearData['rural' + '_' + 'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['rural' + '_' + 'female'], data.decade[1]['rural' + '_' + 'female']).toFixed(3), diff(d, minMaxDates[1]), maxYearData['rural' + '_' + 'female']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban' + '_' + 'male'], data.decade[1]['urban' + '_' + 'male']).toFixed(3), diff(d, minMaxDates[1]), maxYearData['urban' + '_' + 'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban' + '_' + 'female'], data.decade[1]['urban' + '_' + 'female']).toFixed(3), diff(d, minMaxDates[1]), maxYearData['urban' + '_' + 'female']).toFixed(0)) : parseInt(projectedValue(R(data.decade[0]['rural' + '_' + fvalues.gen], data.decade[1]['rural' + '_' + fvalues.gen]).toFixed(3), diff(d, minMaxDates[1]), maxYearData['rural' + '_' + fvalues.gen]).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban' + '_' + fvalues.gen], data.decade[1]['urban' + '_' + fvalues.gen]).toFixed(3), diff(d, minMaxDates[1]), maxYearData['urban' + '_' + fvalues.gen]).toFixed(0)) : fvalues.gen == 'person' ? parseInt(projectedValue(R(data.decade[0][fvalues.geo + '_' + 'male'], data.decade[1][fvalues.geo + '_' + 'male']).toFixed(3), diff(d, minMaxDates[1]), maxYearData[fvalues.geo + '_' + 'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0][fvalues.geo + '_' + 'female'], data.decade[1][fvalues.geo + '_' + 'female']).toFixed(3), diff(d, minMaxDates[1]), maxYearData[fvalues.geo + '_' + 'female']).toFixed(0)) : parseInt(projectedValue(R(data.decade[0][fvalues.geo + '_' + fvalues.gen], data.decade[1][fvalues.geo + '_' + fvalues.gen]).toFixed(3), diff(d, minMaxDates[1]), maxYearData[fvalues.geo + '_' + fvalues.gen]).toFixed(0));
+	            lineChartData.push(projData);
+	        }
+	    });
+	    return [getTablePredicatedData(data, fvalues, minMaxDates), getData(labels, lineChartData)];
+	}
+
+	function getTablePredicatedData(data, fvalues, minMaxDates) {
+	    var obj1 = { paramType: "Labour Force" },
+	        obj2 = { paramType: "Workers" },
+	        obj3 = { paramType: "Unemployed Persons" },
+	        obj4 = { paramType: "Projected population As On " + fvalues.year };
+	    var df = diff(fvalues.year, minMaxDates[1]);
+	    var df1 = diff(fvalues.year, data.decade[1].year);
+	    var lpf = _underscore2['default'].filter(data.lfp, function (lp) {
+	        return lp.type == fvalues.datatype && lp.year == minMaxDates[1];
+	    })[0];
+	    var wp = _underscore2['default'].filter(data.wp, function (lp) {
+	        return lp.type == fvalues.datatype && lp.year == minMaxDates[1];
+	    })[0];
+	    var uep = _underscore2['default'].filter(data.ump, function (lp) {
+	        return lp.type == fvalues.datatype && lp.year == minMaxDates[1];
+	    })[0];
+	    _underscore2['default'].each(labels, function (l) {
+	        obj1[l] = parseInt(projectedValue(R(data.decade[0][l], data.decade[1][l]).toFixed(3), df, lpf[l]).toFixed(0));
+	    });
+	    setPersonsAndTotalValues(obj1);
+	    _underscore2['default'].each(labels, function (l) {
+	        obj2[l] = parseInt(projectedValue(R(data.decade[0][l], data.decade[1][l]).toFixed(3), df, wp[l]).toFixed(0));
+	    });
+	    setPersonsAndTotalValues(obj2);
+	    _underscore2['default'].each(labels, function (l) {
+	        obj3[l] = parseInt(projectedValue(R(data.decade[0][l], data.decade[1][l]).toFixed(3), df, uep[l]).toFixed(0));
+	    });
+	    setPersonsAndTotalValues(obj3);
+	    _underscore2['default'].each(labels, function (l) {
+	        obj4[l] = parseInt(projectedValue(R(data.decade[0][l], data.decade[1][l]).toFixed(3), df1, data.decade[1][l]).toFixed(0));
+	    });
+	    setPersonsAndTotalValues(obj4);
+	    return [obj1, obj2, obj3, obj4];
+	}
+
+	function setPersonsAndTotalValues(obj) {
+	    obj["rural_person"] = obj.rural_male + obj.rural_female;
+	    obj["urban_person"] = obj.urban_male + obj.urban_female;
+	    obj["rural_urban_person"] = obj["urban_person"] + obj["rural_person"];
+	    obj["rural_urban_male"] = obj["urban_male"] + obj["rural_male"];
+	    obj["rural_urban_female"] = obj["urban_female"] + obj["rural_female"];
+	}
+
+/***/ },
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

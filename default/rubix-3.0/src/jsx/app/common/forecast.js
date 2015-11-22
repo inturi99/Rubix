@@ -13,7 +13,7 @@ function a (xbar,ybar,b) {
 
 function b (xmean,ymean,data) {
   return (_.reduce(data,function(acc,d) { return acc + ((d.year-xmean)*(d.y-ymean));  },0)/
-          (_.reduce(data,function(acc,d){ return acc + Math.pow(d.year-xmean,2);},0)));
+  (_.reduce(data,function(acc,d){ return acc + Math.pow(d.year-xmean,2);},0)));
 }
 
 function y (x,data) {
@@ -40,44 +40,44 @@ function getY(year,data) {
 
 function getData(labeldata,dataarray){
   return { labels: labeldata,
-           datasets:[
-             {
-               label: "original",
-               //fillColor: "rgba(220,220,220,0.2)",
-               //strokeColor: "rgba(220,220,220,1)",
-               //pointColor: "rgba(220,220,220,1)",
-               //pointrokeColor: "#fff",
-               //pointHighlightFill: "#fff",
-               //pointHighlightStroke: "rgba(220,220,220,1)",
-               fillColor: "rgba(128,170,212,0.7)"//"#80AAD4"//"rgba(151,187,205,0.2)"
-               ,strokeColor: "#0054A9"//"rgba(151,187,205,1)",
-               ,pointColor: "#0054A9"//"rgba(151,187,205,1)",
-               ,pointStrokeColor: "#0054A9"//"#fff",
-               ,pointHighlightFill: "#0054A9"//"#fff",
-               ,pointHighlightStroke: "#0054A9"//"rgba(151,187,205,1)",
-               , data: dataarray
-             }
+    datasets:[
+      {
+        label: "original",
+        //fillColor: "rgba(220,220,220,0.2)",
+        //strokeColor: "rgba(220,220,220,1)",
+        //pointColor: "rgba(220,220,220,1)",
+        //pointrokeColor: "#fff",
+        //pointHighlightFill: "#fff",
+        //pointHighlightStroke: "rgba(220,220,220,1)",
+        fillColor: "rgba(128,170,212,0.7)"//"#80AAD4"//"rgba(151,187,205,0.2)"
+        ,strokeColor: "#0054A9"//"rgba(151,187,205,1)",
+        ,pointColor: "#0054A9"//"rgba(151,187,205,1)",
+        ,pointStrokeColor: "#0054A9"//"#fff",
+        ,pointHighlightFill: "#0054A9"//"#fff",
+        ,pointHighlightStroke: "#0054A9"//"rgba(151,187,205,1)",
+        , data: dataarray
+      }
 
 
-           ]};
+    ]};
 }
 
 var options = { bezierCurve: true,datasetFill:true,pointDot:true};
 var baroptions = {barValueSpacing:20,showTooltips:false,
-                  onAnimationComplete:function(){
+  onAnimationComplete:function(){
 
-                    var ctx = this.chart.ctx;
-                    ctx.font = this.scale.font;
-                    ctx.fillStyle = this.scale.textColor
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "bottom";
+    var ctx = this.chart.ctx;
+    ctx.font = this.scale.font;
+    ctx.fillStyle = this.scale.textColor
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
 
-                    this.datasets.forEach(function (dataset) {
-                      dataset.bars.forEach(function (bar) {
-                        ctx.fillText(bar.value, bar.x, bar.y - 5);
-                      });
-                    })
-                  }};
+    this.datasets.forEach(function (dataset) {
+      dataset.bars.forEach(function (bar) {
+        ctx.fillText(bar.value, bar.x, bar.y - 5);
+      });
+    })
+  }};
 
 export class LineChart extends Component {
   constructor(props) {
@@ -222,96 +222,94 @@ export class LineChart extends Component {
     return (
         <Container id="graph">
         <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
-        <Panel>
+        <Panel horizontal className='force-collapse'>
+        <PanelLeft className='col-xs-6'>
         <PanelHeader className='bg-orange75 fg-white center text-center'>
 
         <h4>Labour Force Parameters</h4>
-        </PanelHeader>
-        <PanelBody style={{padding:10}}>
-        <Filter handleDataType={this.handleDataType.bind(this)}
-      data={this.state.data} tdata={this.state.tdata} casteHandle={this.casteHandle.bind(this)}
-      genderHandle={this.genderHandle.bind(this)} geoHandle={this.geoHandle.bind(this)}></Filter>
+    </PanelHeader>
+    <PanelBody style={{padding:10}}>
+  <Filter handleDataType={this.handleDataType.bind(this)}
+    data={this.state.data} tdata={this.state.tdata} casteHandle={this.casteHandle.bind(this)}
+    genderHandle={this.genderHandle.bind(this)} geoHandle={this.geoHandle.bind(this)}></Filter>
 
 
-        <FormGroup>
-        <Label>Year</Label>
-        <div>
-        <ComboBox dates={yearsData(2012,2030)} onChange={this.onChange.bind(this)} tdata={this.state.tabledata}></ComboBox>
-        </div>
-        </FormGroup>
-        </PanelBody>
-        </Panel>
-        </PanelContainer>
-        <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
+    <FormGroup>
+    <Label>Year</Label>
+    <div>
+    <ComboBox dates={yearsData(2012,2030)} onChange={this.onChange.bind(this)} tdata={this.state.tabledata}></ComboBox>
+    </div>
+    </FormGroup>
+    </PanelBody>
+    </PanelLeft>
+    <PanelRight className='col-xs-6 text-center'>
+        <PanelHeader className='bg-orange75 fg-white center text-center'>
+
+        <h4>{this.props.type} Trend</h4>
+    </PanelHeader>
+    <PanelBody style={{padding:10}}>
+  <input type='text' value={this.state.knobval} className='dial autosize' data-width='100%' data-fgcolor='#F09FA6' disabled />
+    </PanelBody>
+    </PanelRight>
+    </Panel>
+    </PanelContainer>
+    <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
         <Panel>
         <PanelHeader className='bg-orange75 fg-white center text-center'>
 
         <h4>Labour Force Parameter Trend</h4>
-        </PanelHeader>
-        <PanelBody style={{padding:10}}>
-        <input type='text' value={this.state.knobval} className='dial autosize' data-width='100%' data-fgcolor='#F09FA6' />
-        </PanelBody>
-        </Panel>
-        </PanelContainer>
+
+    </PanelHeader>
+    <PanelBody>
+
+    <Line id="chart" data={this.state.data} options={options}  style={{"height" : "250px", "width" : "100%"}}
+    margin="10" redraw></Line>
+
+    </PanelBody>
+    </Panel>
+    </PanelContainer>
 
 
-        <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
-        <Panel>
-        <PanelHeader className='bg-orange75 fg-white center text-center'>
-
-        <h4>Labour Force Parameter Trend</h4>
-
-        </PanelHeader>
-        <PanelBody>
-
-        <Line id="chart" data={this.state.data} options={options}  style={{"height" : "250px", "width" : "100%"}}
-      margin="10" redraw></Line>
-
-        </PanelBody>
-        </Panel>
-        </PanelContainer>
-
-
-        <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
+    <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
         <Panel>
         <PanelHeader className='bg-orange75 fg-white center text-center'>
 
         <h4>Comparative Labour Force Parameters</h4>
 
-        </PanelHeader>
-        <PanelBody>
+    </PanelHeader>
+    <PanelBody>
 
-        <title>Guess what?</title>
-        <style type="text/css" dangerouslySetInnerHTML={{__html: "\n<!--\n.side { vertical-align:absbottom; display:inline }\n-->\n" }} />
-        <h6 className="side" style={{color:"rgb(141,211,199)"}}> SC-MALE </h6>
-        <h6 className="side" style={{color:"rgb(251,180,174)"}}>: SC-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(190,186,218)"}}>: SC-PERSON </h6>
+    <title>Guess what?</title>
+    <style type="text/css" dangerouslySetInnerHTML={{__html: "\n<!--\n.side { vertical-align:absbottom; display:inline }\n-->\n" }} />
+  <h6 className="side" style={{color:"rgb(141,211,199)"}}> SC-MALE </h6>
+    <h6 className="side" style={{color:"rgb(251,180,174)"}}>: SC-FEMALE </h6>
+    <h6 className="side" style={{color:"rgb(190,186,218)"}}>: SC-PERSON </h6>
 
-        <h6 className="side" style={{color:"rgb(251,128,114)"}}>: ST-MALE  </h6>
-        <h6 className="side" style={{color:"rgb(128,177,211)"}}>: ST-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(253,180,98)"}}>: ST-PERSON </h6>
+    <h6 className="side" style={{color:"rgb(251,128,114)"}}>: ST-MALE  </h6>
+    <h6 className="side" style={{color:"rgb(128,177,211)"}}>: ST-FEMALE </h6>
+    <h6 className="side" style={{color:"rgb(253,180,98)"}}>: ST-PERSON </h6>
 
-        <h6 className="side" style={{color:"rgb(179,222,105)"}}>: OBC-MALE </h6>
-        <h6 className="side" style={{color:"rgb(252,205,229)"}}>: OBC-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(217,217,217)"}}>: OBC-PERSON </h6>
-        <h6 className="side" style={{color:"rgb(188,128,189)"}}>: OTHERS-MALE </h6>
-        <h6 className="side" style={{color:"rgb(204,235,197)"}}>: OTHERS-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(255,237,111)"}}>: OTHERS-PERSON</h6>
+    <h6 className="side" style={{color:"rgb(179,222,105)"}}>: OBC-MALE </h6>
+    <h6 className="side" style={{color:"rgb(252,205,229)"}}>: OBC-FEMALE </h6>
+    <h6 className="side" style={{color:"rgb(217,217,217)"}}>: OBC-PERSON </h6>
+    <h6 className="side" style={{color:"rgb(188,128,189)"}}>: OTHERS-MALE </h6>
+    <h6 className="side" style={{color:"rgb(204,235,197)"}}>: OTHERS-FEMALE </h6>
+    <h6 className="side" style={{color:"rgb(255,237,111)"}}>: OTHERS-PERSON</h6>
 
-        <Bar id="bchart" data={this.state.bdata} options={baroptions}  style={{"height":"250px" , "width" : "100%"}} redraw>
-        </Bar>
+    <Bar id="bchart" data={this.state.bdata} options={baroptions}  style={{"height":"250px" , "width" : "100%"}} redraw>
+    </Bar>
 
 
 
-        </PanelBody>
-        </Panel>
-        </PanelContainer>
+    </PanelBody>
+    </Panel>
+    </PanelContainer>
 
-        <DataTable tabledata={this.state.tdata} type={this.props.title}></DataTable>
+    <DataTable tabledata={this.state.tdata} type={this.props.title}></DataTable>
 
-        </Container>
+    </Container>
 
-    );
+  );
   }
 }
 
@@ -326,67 +324,67 @@ export class Filter extends Component {
         <Label>Gender</Label>
         <div>
         <Radio inline id= "male" value='option1' name="gen"  onClick={this.props.genderHandle.bind(this)}>
-        Male
-      </Radio>
-        <Radio inline id="female"  value='option2'  name="gen" onClick={this.props.genderHandle.bind(this)}>
-        Female
-      </Radio>
-        <Radio inline id="person"  value='option3' defaultChecked name="gen" onClick={this.props.genderHandle.bind(this)}>
-        Person
-      </Radio>
-        </div>
-        </FormGroup>
+    Male
+    </Radio>
+    <Radio inline id="female"  value='option2'  name="gen" onClick={this.props.genderHandle.bind(this)}>
+    Female
+    </Radio>
+    <Radio inline id="person"  value='option3' defaultChecked name="gen" onClick={this.props.genderHandle.bind(this)}>
+    Person
+    </Radio>
+    </div>
+    </FormGroup>
 
 
-        <FormGroup>
-        <Label>Social Group</Label>
-        <div>
-        <Radio inline id= "SC" value='option1' name="cat"  onClick={this.props.casteHandle.bind(this)}>
-        SC
-      </Radio>
-        <Radio inline id="ST"  value='option2'  name="cat" onClick={this.props.casteHandle.bind(this)}>
-        ST
-      </Radio>
-        <Radio inline id="OBC"  value='option3'  name="cat" onClick={this.props.casteHandle.bind(this)}>
-        OBC
-      </Radio>
-        <Radio inline id="OTHERS"  value='option3'  name="cat" onClick={this.props.casteHandle.bind(this)}>
-        OTHERS
-      </Radio>
-        <Radio inline id="OVERALL"  value='option3' defaultChecked  name="cat" onClick={this.props.casteHandle.bind(this)}>
-        OVERALL
-      </Radio>
-        </div>
-        </FormGroup>
+    <FormGroup>
+    <Label>Social Group</Label>
+    <div>
+    <Radio inline id= "SC" value='option1' name="cat"  onClick={this.props.casteHandle.bind(this)}>
+    SC
+    </Radio>
+    <Radio inline id="ST"  value='option2'  name="cat" onClick={this.props.casteHandle.bind(this)}>
+    ST
+    </Radio>
+    <Radio inline id="OBC"  value='option3'  name="cat" onClick={this.props.casteHandle.bind(this)}>
+    OBC
+    </Radio>
+    <Radio inline id="OTHERS"  value='option3'  name="cat" onClick={this.props.casteHandle.bind(this)}>
+    OTHERS
+    </Radio>
+    <Radio inline id="OVERALL"  value='option3' defaultChecked  name="cat" onClick={this.props.casteHandle.bind(this)}>
+    OVERALL
+    </Radio>
+    </div>
+    </FormGroup>
 
-        <FormGroup>
-        <Label>Category</Label>
-        <div>
-        <Radio inline  id="rural" value='option1' name="geo"  onClick={this.props.geoHandle.bind(this)}>
-        RURAL
-      </Radio>
-        <Radio inline id="urban"  value='option2'  name="geo" onClick={this.props.geoHandle.bind(this)}>
-        URBAN
-      </Radio>
-        <Radio inline id="rural_urban"  value='option3' defaultChecked  name="geo" onClick={this.props.geoHandle.bind(this)}>
-        RURAL+URBAN
-      </Radio>
-        </div>
-        </FormGroup>
-        <FormGroup>
-        <Label>Approach</Label>
-        <div>
-        <Radio inline  id="UPS" value='option1' defaultChecked name="datatype"  onClick={this.props.handleDataType.bind(this)}>
-        UPS
-      </Radio>
-        <Radio inline id="UPSS"  value='option2'  name="datatype" onClick={this.props.handleDataType.bind(this)}>
-        UPSS
-      </Radio>
-        </div>
-        </FormGroup>
-        </Form>
-        </Container>
-    );
+    <FormGroup>
+    <Label>Category</Label>
+    <div>
+    <Radio inline  id="rural" value='option1' name="geo"  onClick={this.props.geoHandle.bind(this)}>
+    RURAL
+    </Radio>
+    <Radio inline id="urban"  value='option2'  name="geo" onClick={this.props.geoHandle.bind(this)}>
+    URBAN
+    </Radio>
+    <Radio inline id="rural_urban"  value='option3' defaultChecked  name="geo" onClick={this.props.geoHandle.bind(this)}>
+    RURAL+URBAN
+    </Radio>
+    </div>
+    </FormGroup>
+    <FormGroup>
+    <Label>Approach</Label>
+    <div>
+    <Radio inline  id="UPS" value='option1' defaultChecked name="datatype"  onClick={this.props.handleDataType.bind(this)}>
+    UPS
+    </Radio>
+    <Radio inline id="UPSS"  value='option2'  name="datatype" onClick={this.props.handleDataType.bind(this)}>
+    UPSS
+    </Radio>
+    </div>
+    </FormGroup>
+    </Form>
+    </Container>
+  );
   }
 }
 
@@ -425,7 +423,7 @@ function getPreviousData(cattype,prop,data) {
 function getPredictedData(sampledata,year){
   var types = ["SC","ST","OBC","OTHERS","OVERALL"];
   var props = ["rural_male","rural_female","rural_person","urban_male","urban_female","urban_person",
-               "rural_urban_male","rural_urban_female","rural_urban_person"];
+    "rural_urban_male","rural_urban_female","rural_urban_person"];
   var predictedData = [];
   _.each(types,function(obj){
     var transobj = {"caste":obj,"year":year};
@@ -453,23 +451,23 @@ export class DataTable extends Component {
         // 'tron' case
         if(this.$.data('skin') == 'tron') {
           var a = this.angle(this.cv)  // Angle
-          , sa = this.startAngle          // Previous start angle
-          , sat = this.startAngle         // Start angle
-          , ea                            // Previous end angle
-          , eat = sat + a                 // End angle
-          , r = true;
+              , sa = this.startAngle          // Previous start angle
+              , sat = this.startAngle         // Start angle
+              , ea                            // Previous end angle
+              , eat = sat + a                 // End angle
+              , r = true;
 
           this.g.lineWidth = this.lineWidth;
 
           this.o.cursor
-            && (sat = eat - 0.3)
-            && (eat = eat + 0.3);
+          && (sat = eat - 0.3)
+          && (eat = eat + 0.3);
 
           if(this.o.displayPrevious) {
             ea = this.startAngle + this.angle(this.value);
             this.o.cursor
-              && (sa = ea - 0.3)
-              && (ea = ea + 0.3);
+            && (sa = ea - 0.3)
+            && (ea = ea + 0.3);
             this.g.beginPath();
             this.g.strokeStyle = this.previousColor;
             this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
@@ -508,13 +506,13 @@ export class DataTable extends Component {
         <Panel>
         <PanelHeader className='bg-orange75 fg-white center text-center'>
         <h4>{this.props.type}</h4>
-        </PanelHeader>
-        <PanelBody>
+    </PanelHeader>
+    <PanelBody>
 
-        <Table striped bordered className='tablesaw'>
+    <Table striped bordered className='tablesaw'>
         <thead>
         <th>Social Group</th>
-        <th colSpan={3}>Rural</th>
+    <th colSpan={3}>Rural</th>
         <th  colSpan={3}>Urban</th>
         <th  colSpan={3}>Rural+Urban</th>
         <tr>
@@ -535,7 +533,7 @@ export class DataTable extends Component {
 
         {rows}
 
-      </tbody>
+        </tbody>
         </Table>
 
 
@@ -544,7 +542,7 @@ export class DataTable extends Component {
         </PanelContainer>
 
 
-    );
+  );
   }
 }
 
@@ -553,33 +551,33 @@ export class Row extends Component {
   render(){
     var d = this.props.data;
     return (<tr>
-            <td>{d.caste}</td>
-            <td><p className="dataCell">{d.rural_male}</p></td>
-            <td><p className="dataCell">{d.rural_female}</p></td>
-            <td><p className="dataCell">{d.rural_person}</p></td>
-            <td><p className="dataCell">{d.urban_male}</p></td>
-            <td><p className="dataCell">{d.urban_female}</p></td>
-            <td><p className="dataCell">{d.urban_person}</p></td>
-            <td><p className="dataCell">{d.rural_urban_male}</p></td>
-            <td><p className="dataCell">{d.rural_urban_female}</p></td>
-            <td><p className="dataCell">{d.rural_urban_person}</p></td>
-            </tr>);
+        <td>{d.caste}</td>
+    <td><p className="dataCell">{d.rural_male}</p></td>
+    <td><p className="dataCell">{d.rural_female}</p></td>
+    <td><p className="dataCell">{d.rural_person}</p></td>
+    <td><p className="dataCell">{d.urban_male}</p></td>
+    <td><p className="dataCell">{d.urban_female}</p></td>
+    <td><p className="dataCell">{d.urban_person}</p></td>
+    <td><p className="dataCell">{d.rural_urban_male}</p></td>
+    <td><p className="dataCell">{d.rural_urban_female}</p></td>
+    <td><p className="dataCell">{d.rural_urban_person}</p></td>
+    </tr>);
   }
 }
 
 function getChartType(chartType) {
   switch (chartType){
-  case "labour-rate":
-    return "lfpr";
-    break;
-  case "worker-population":
-    return "wpr";
-    break;
-  case "unemployment-rate":
-    return "umr";
-    break;
-  default:
-    return "pur";
+    case "labour-rate":
+      return "lfpr";
+      break;
+    case "worker-population":
+      return "wpr";
+      break;
+    case "unemployment-rate":
+      return "umr";
+      break;
+    default:
+      return "pur";
   }
 }
 
