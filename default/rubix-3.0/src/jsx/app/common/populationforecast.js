@@ -316,20 +316,18 @@ export class PopulationChart extends Component {
 
         <title>Guess what?</title>
         <style type="text/css" dangerouslySetInnerHTML={{__html: "\n<!--\n.side { vertical-align:absbottom; display:inline }\n-->\n" }} />
-    <h6 className="side" style={{color:"rgb(141,211,199)"}}> SC-MALE </h6>
-        <h6 className="side" style={{color:"rgb(251,180,174)"}}>: SC-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(190,186,218)"}}>: SC-PERSON </h6>
+    <h6 className="side" style={{color:"rgb(141,211,199)"}}> LF-MALE </h6>
+        <h6 className="side" style={{color:"rgb(251,180,174)"}}>: LF-FEMALE </h6>
+        <h6 className="side" style={{color:"rgb(190,186,218)"}}>: LF-PERSON </h6>
 
-        <h6 className="side" style={{color:"rgb(251,128,114)"}}>: ST-MALE  </h6>
-        <h6 className="side" style={{color:"rgb(128,177,211)"}}>: ST-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(253,180,98)"}}>: ST-PERSON </h6>
+        <h6 className="side" style={{color:"rgb(251,128,114)"}}>: WP-MALE  </h6>
+        <h6 className="side" style={{color:"rgb(128,177,211)"}}>: WP-FEMALE </h6>
+        <h6 className="side" style={{color:"rgb(253,180,98)"}}>: WP-PERSON </h6>
 
-        <h6 className="side" style={{color:"rgb(179,222,105)"}}>: OBC-MALE </h6>
-        <h6 className="side" style={{color:"rgb(252,205,229)"}}>: OBC-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(217,217,217)"}}>: OBC-PERSON </h6>
-        <h6 className="side" style={{color:"rgb(188,128,189)"}}>: OTHERS-MALE </h6>
-        <h6 className="side" style={{color:"rgb(204,235,197)"}}>: OTHERS-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(255,237,111)"}}>: OTHERS-PERSON</h6>
+        <h6 className="side" style={{color:"rgb(179,222,105)"}}>: UMP-MALE </h6>
+        <h6 className="side" style={{color:"rgb(252,205,229)"}}>: UMP-FEMALE </h6>
+        <h6 className="side" style={{color:"rgb(217,217,217)"}}>: UMP-PERSON </h6>
+
 
 
         <Bar id="bchart" data={this.state.bdata} options={barOptions}  style={{"height":"250px" , "width" : "100%"}} redraw>
