@@ -28,18 +28,12 @@ function yearsData (start,end) {
 }
 
 var labels = ["rural_male","rural_female", "urban_male","urban_female"];
-function getData(labeldata,dataarray){
+function getData(labeldata,dataarray,name){
     return { labels: labeldata,
         datasets:[
             {
-                label: "original",
-                //fillColor: "rgba(220,220,220,0.2)",
-                //strokeColor: "rgba(220,220,220,1)",
-                //pointColor: "rgba(220,220,220,1)",
-                //pointrokeColor: "#fff",
-                //pointHighlightFill: "#fff",
-                //pointHighlightStroke: "rgba(220,220,220,1)",
-                fillColor: "rgba(128,170,212,0.7)"//"#80AAD4"//"rgba(151,187,205,0.2)"
+                label:name
+                ,fillColor: "rgba(128,170,212,0.7)"//"#80AAD4"//"rgba(151,187,205,0.2)"
                 ,strokeColor: "#0054A9"//"rgba(151,187,205,1)",
                 ,pointColor: "#0054A9"//"rgba(151,187,205,1)",
                 ,pointStrokeColor: "#0054A9"//"#fff",
@@ -47,8 +41,6 @@ function getData(labeldata,dataarray){
                 ,pointHighlightStroke: "#0054A9"//"rgba(151,187,205,1)",
                 , data: dataarray
             }
-
-
         ]};
 }
 var options = { bezierCurve: true,datasetFill:true,pointDot:true};
@@ -70,17 +62,20 @@ var barOptions = {barValueSpacing:20,barDatasetSpacing : 4,showTooltips:false,
 export class PopulationChart extends Component {
     constructor(props) {
         super(props);
-        this.state = {data: props.data,tdata:[],bdata:props.bdata,knobvalue:0};
+        this.state = {data: props.data,tdata:[],bdata:props.bdata,
+            data1: props.data1,  data2: props.data2,data3:props.data3};
     }
     componentDidMount() {
         $('#dates').val(2014);
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: "http://localhost:8091/all1",
             dataType: 'json',
             success: function (data) {
                 var arr = [];
                 var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
+                var years = genYears(fvalues.year,minandmaxdatadates[0]);
+                 years.push(parseInt(fvalues.year));
                 var opData;
                 if(fvalues.year <= minandmaxdatadates[1]) {
                     var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
@@ -92,14 +87,21 @@ export class PopulationChart extends Component {
                     var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
                     ump.paramType = "Unemployed Persons";
                     arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
+                    opData = getPresentData(arr,data.decade,fvalues.year,data,fvalues,years);
+                    this.setState({tdata:opData[0],
+                        data:getData(years,opData[1][0],"labour force"),
+                        data1:getData(years,opData[1][1],"worker population"),
+                        data2:getData(years,opData[1][2],"UnEmployement"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);}),"Population"),
+                        bdata:barChartData(arr)});
                 }
                 else {
                     var years = genYears(fvalues.year,minandmaxdatadates[0]);
                     years.push(parseInt(fvalues.year));
                     var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
+                    this.setState({tdata:preData[0],data:getData(years,preData[1][0],"lfp"),bdata:barChartData(preData[0]),
+                        data1:getData(years,preData[1][1],"wp"),data2:getData(years,preData[1][2],"ump"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);}),"population")});
                 }
 
             }.bind(this),
@@ -112,11 +114,13 @@ export class PopulationChart extends Component {
     handleDataType(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: "http://localhost:8091/all1",
             dataType: 'json',
             success: function (data) {
                 var arr = [];
                 var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
+                var years = genYears(fvalues.year,minandmaxdatadates[0]);
+                years.push(parseInt(fvalues.year));
                 var opData;
                 if(fvalues.year <= minandmaxdatadates[1]) {
                     var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
@@ -128,15 +132,21 @@ export class PopulationChart extends Component {
                     var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
                     ump.paramType = "Unemployed Persons";
                     arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    console.log(opData[0]);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr)});
+                    opData = getPresentData(arr,data.decade,fvalues.year,data,fvalues,years);
+                    this.setState({tdata:opData[0],
+                        data:getData(years,opData[1][0],"labour force"),
+                        data1:getData(years,opData[1][1],"worker population"),
+                        data2:getData(years,opData[1][2],"UnEmployement"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);})),
+                        bdata:barChartData(arr)});
                 }
                 else {
                     var years = genYears(fvalues.year,minandmaxdatadates[0]);
                     years.push(parseInt(fvalues.year));
                     var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0])});
+                    this.setState({tdata:preData[0],data:getData(years,preData[1][0],"lfp"),bdata:barChartData(preData[0]),
+                        data1:getData(years,preData[1][1],"wp"),data2:getData(years,preData[1][2],"ump"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);}),"population")});
                 }
 
             }.bind(this),
@@ -149,11 +159,13 @@ export class PopulationChart extends Component {
     onChange(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: "http://localhost:8091/all1",
             dataType: 'json',
             success: function (data) {
                 var arr = [];
                 var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
+                var years = genYears(fvalues.year,minandmaxdatadates[0]);
+                years.push(parseInt(fvalues.year));
                 var opData;
                 if(fvalues.year <= minandmaxdatadates[1]) {
                     var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
@@ -165,14 +177,21 @@ export class PopulationChart extends Component {
                     var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
                     ump.paramType = "Unemployed Persons";
                     arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
+                    opData = getPresentData(arr,data.decade,fvalues.year,data,fvalues,years);
+                    this.setState({tdata:opData[0],
+                        data:getData(years,opData[1][0],"labour force"),
+                        data1:getData(years,opData[1][1],"worker population"),
+                        data2:getData(years,opData[1][2],"UnEmployement"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);})),
+                        bdata:barChartData(arr)});
                 }
                 else {
                     var years = genYears(fvalues.year,minandmaxdatadates[0]);
                     years.push(parseInt(fvalues.year));
                     var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
+                    this.setState({tdata:preData[0],data:getData(years,preData[1][0],"lfp"),bdata:barChartData(preData[0]),
+                        data1:getData(years,preData[1][1],"wp"),data2:getData(years,preData[1][2],"ump"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);}),"population")});
                 }
 
             }.bind(this),
@@ -185,11 +204,13 @@ export class PopulationChart extends Component {
     genderHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: "http://localhost:8091/all1",
             dataType: 'json',
             success: function (data) {
                 var arr = [];
                 var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
+                var years = genYears(fvalues.year,minandmaxdatadates[0]);
+                years.push(parseInt(fvalues.year));
                 var opData;
                 if(fvalues.year <= minandmaxdatadates[1]) {
                     var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
@@ -201,14 +222,21 @@ export class PopulationChart extends Component {
                     var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
                     ump.paramType = "Unemployed Persons";
                     arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
+                    opData = getPresentData(arr,data.decade,fvalues.year,data,fvalues,years);
+                    this.setState({tdata:opData[0],
+                        data:getData(years,opData[1][0],"labour force"),
+                        data1:getData(years,opData[1][1],"worker population"),
+                        data2:getData(years,opData[1][2],"UnEmployement"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);})),
+                        bdata:barChartData(arr)});
                 }
                 else {
                     var years = genYears(fvalues.year,minandmaxdatadates[0]);
                     years.push(parseInt(fvalues.year));
                     var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
+                    this.setState({tdata:preData[0],data:getData(years,preData[1][0],"lfp"),bdata:barChartData(preData[0]),
+                        data1:getData(years,preData[1][1],"wp"),data2:getData(years,preData[1][2],"ump"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);}),"population")});
                 }
 
             }.bind(this),
@@ -221,11 +249,13 @@ export class PopulationChart extends Component {
     geoHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: "http://localhost:8091/all1",
             dataType: 'json',
             success: function (data) {
                 var arr = [];
                 var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
+                var years = genYears(fvalues.year,minandmaxdatadates[0]);
+                years.push(parseInt(fvalues.year));
                 var opData;
                 if(fvalues.year <= minandmaxdatadates[1]) {
                     var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
@@ -237,15 +267,21 @@ export class PopulationChart extends Component {
                     var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
                     ump.paramType = "Unemployed Persons";
                     arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    console.log(opData[0]);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
+                    opData = getPresentData(arr,data.decade,fvalues.year,data,fvalues,years);
+                    this.setState({tdata:opData[0],
+                        data:getData(years,opData[1][0],"labour force"),
+                        data1:getData(years,opData[1][1],"worker population"),
+                        data2:getData(years,opData[1][2],"UnEmployement"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);})),
+                        bdata:barChartData(arr)});
                 }
                 else {
                     var years = genYears(fvalues.year,minandmaxdatadates[0]);
                     years.push(parseInt(fvalues.year));
                     var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
+                    this.setState({tdata:preData[0],data:getData(years,preData[1][0],"lfp"),bdata:barChartData(preData[0]),
+                        data1:getData(years,preData[1][1],"wp"),data2:getData(years,preData[1][2],"ump"),
+                        data3:getData(years,_.map(years,function(y){ return otherYearSelTypePresentProjData(fvalues,y,data.decade[1].year,data.decade);}),"population")});
                 }
 
             }.bind(this),
@@ -260,11 +296,11 @@ export class PopulationChart extends Component {
         return (
             <Container id="graph">
             <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
-            <Panel horizontal className='force-collapse'>
-            <PanelLeft className='col-xs-6'>
+            <Panel>
+
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Labour Force Parameters</h4>
+            <h4>Parameters</h4>
         </PanelHeader>
         <PanelBody style={{padding:10}}>
             <Filter handleDataType={this.handleDataType.bind(this)}
@@ -277,31 +313,59 @@ export class PopulationChart extends Component {
         </div>
         </FormGroup>
         </PanelBody>
-        </PanelLeft>
-        <PanelRight className='col-xs-6 text-center'>
-            <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Population</h4>
-        </PanelHeader>
-        <PanelBody style={{padding:10}}>
-
-    <input type='text' value={this.state.knobvalue} className='dial autosize' data-width='150%' data-fgcolor='#498bcb' disabled />
-        </PanelBody>
-        </PanelRight>
         </Panel>
         </PanelContainer>
         <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
-            <Panel>
+            <Panel horizontal className='force-collapse'>
+            <PanelLeft className='col-xs-6'>
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Labour Force Parameter Trend</h4>
+            <h4>Labour Force Population </h4>
 
         </PanelHeader>
         <PanelBody>
         <Line id="chart" data={this.state.data} options={options}  style={{"height" : "250px", "width" : "100%"}}
+         margin="10" redraw></Line>
+        </PanelBody>
+        </PanelLeft>
+        <PanelRight className='col-xs-6 text-center'>
+            <PanelHeader className='bg-orange75 fg-white center text-center'>
+
+            <h4>Workers Population</h4>
+            </PanelHeader>
+            <PanelBody style={{padding:10}}>
+        <Line id="chart1" data={this.state.data1} options={options}  style={{"height" : "250px", "width" : "100%"}}
+        margin="10" redraw></Line>
+        </PanelBody>
+            </PanelRight>
+        </Panel>
+        </PanelContainer>
+
+        <PanelContainer noOverflow controlStyles='bg-orange75 fg-white'>
+            <Panel horizontal className='force-collapse'>
+            <PanelLeft className='col-xs-6'>
+            <PanelHeader className='bg-orange75 fg-white center text-center'>
+
+            <h4>Unemployed Persons </h4>
+
+        </PanelHeader>
+        <PanelBody>
+        <Line id="chart2" data={this.state.data2} options={options}  style={{"height" : "250px", "width" : "100%"}}
+        margin="10" redraw></Line>
+        </PanelBody>
+        </PanelLeft>
+        <PanelRight className='col-xs-6 text-center'>
+            <PanelHeader className='bg-orange75 fg-white center text-center'>
+
+            <h4>Total Population</h4>
+            </PanelHeader>
+            <PanelBody style={{padding:10}}>
+        <Line id="chart3" data={this.state.data3} options={options}  style={{"height" : "250px", "width" : "100%"}}
         margin="10" redraw></Line>
 
         </PanelBody>
+        </PanelRight>
         </Panel>
         </PanelContainer>
 
@@ -346,7 +410,7 @@ export class PopulationChart extends Component {
 
 
 
-function getPresentData(data,decadeData,selYear,allYearsData,fvalues) {
+function getPresentData(data,decadeData,selYear,allYearsData,fvalues,years) {
     var df = (selYear == 2012 ) ? 6 :(selYear == 2013) ? 22  :diff(selYear,decadeData[1].year);
     var obj = {paramType: "Projected Population as on 1'st march "+selYear};
     _.each(labels,function(l){
@@ -358,8 +422,7 @@ function getPresentData(data,decadeData,selYear,allYearsData,fvalues) {
     obj["rural_urban_male"] = obj["urban_male"] +  obj["rural_male"];
     obj["rural_urban_female"] = obj["urban_female"] +  obj["rural_female"];
     data.push(obj);
-    var lchartData = getLineChartData(allYearsData,fvalues);
-    return [data,getData(lchartData[0],lchartData[1])];
+    return [data,getLineChartData(allYearsData,fvalues)];
 }
 
 export class Filter extends Component {
@@ -610,13 +673,26 @@ function getFilterValues() {
 }
 
 function getLineChartData(previousData,fvalues) {
-    var labels = [];
     var axisData = [];
-    _.each(previousData,function(c){
-        labels.push(c.year.toString());
-        axisData.push(c[fvalues.geo+'_'+fvalues.gen]);
+    var lfpData =  previousData['lfp'].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;});
+    var wpData =  previousData['wp'].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;});
+    var umpData =  previousData['ump'].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;});
+    var obj1 = [],obj2=[],obj3=[];
+    _.each(lfpData,function(c){
+        obj1.push(c[fvalues.geo+'_'+fvalues.gen]);
     });
-    return [labels,axisData];
+
+    _.each(wpData,function(c){
+        obj2.push(c[fvalues.geo+'_'+fvalues.gen]);
+    });
+
+    _.each(umpData,function(c){
+        obj3.push(c[fvalues.geo+'_'+fvalues.gen]);
+    });
+    axisData.push(obj1);
+    axisData.push(obj2);
+    axisData.push(obj3);
+    return axisData;
 }
 
 function barChartData(data) {
@@ -647,32 +723,35 @@ function getMinDateAndMaxDateInGivenData(data){
 function predictedData(years,data,fvalues,paramType,minMaxDates){
     var labels = [];
     var lineChartData = [];
-    var maxYearData = _.filter(data[paramType],function(data)
+    var obj1=[],obj2=[],obj3=[];
+    var maxYearDatalfp = _.filter(data.lfp,function(data)
+    { return data.year == minMaxDates[1] && data.type == fvalues.datatype;})[0]
+    var maxYearDatawp = _.filter(data.wp,function(data)
+    { return data.year == minMaxDates[1] && data.type == fvalues.datatype;})[0]
+    var maxYearDataump = _.filter(data.ump,function(data)
     { return data.year == minMaxDates[1] && data.type == fvalues.datatype;})[0]
     _.each(years,function(d) {
 
         if(d<=minMaxDates[1]) {
             labels.push(d.toString());
-            lineChartData.push(_.filter(data[paramType],function(data)
+            obj1.push(_.filter(data.lfp,function(data)
             { return data.year == d && data.type == fvalues.datatype;})[0][fvalues.geo+'_'+fvalues.gen]);
+            obj2.push(_.filter(data.wp,function(data)
+            { return data.year == d && data.type == fvalues.datatype;})[0][fvalues.geo+'_'+fvalues.gen])
+            obj3.push(_.filter(data.ump,function(data)
+            { return data.year == d && data.type == fvalues.datatype;})[0][fvalues.geo+'_'+fvalues.gen])
         }
         else {
-
             labels.push(d.toString());
-            var projData = (fvalues.geo == 'rural_urban') ? (fvalues.gen == 'person') ? (parseInt(projectedValue(R(data.decade[0]['rural'+'_'+'male'],data.decade[1]['rural'+'_'+'male']).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData['rural'+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['rural'+'_'+'female'],data.decade[1]['rural'+'_'+'female']).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData['rural'+'_'+'female']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban'+'_'+'male'],data.decade[1]['urban'+'_'+'male']).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData['urban'+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban'+'_'+'female'],data.decade[1]['urban'+'_'+'female']).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData['urban'+'_'+'female']).toFixed(0))) : (parseInt(projectedValue(R(data.decade[0]['rural'+'_'+fvalues.gen],data.decade[1]['rural'+'_'+fvalues.gen]).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData['rural'+'_'+fvalues.gen]).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban'+'_'+fvalues.gen],data.decade[1]['urban'+'_'+fvalues.gen]).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData['urban'+'_'+fvalues.gen]).toFixed(0))) : (fvalues.gen == 'person') ? parseInt(projectedValue(R(data.decade[0][fvalues.geo+'_'+'male'],data.decade[1][fvalues.geo+'_'+'male']).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData[fvalues.geo+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0][fvalues.geo+'_'+'female'],data.decade[1][fvalues.geo+'_'+'female']).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData[fvalues.geo+'_'+'female']).toFixed(0)) : parseInt(projectedValue(R(data.decade[0][fvalues.geo+'_'+fvalues.gen],data.decade[1][fvalues.geo+'_'+fvalues.gen]).toFixed(3),
-                diff(d,minMaxDates[1]),maxYearData[fvalues.geo+'_'+fvalues.gen]).toFixed(0));
-            lineChartData.push(projData);
+            obj1.push(futureProjectedVal(fvalues,d,minMaxDates[1],data,maxYearDatalfp));
+            obj2.push(futureProjectedVal(fvalues,d,minMaxDates[1],data,maxYearDatawp));
+            obj3.push(futureProjectedVal(fvalues,d,minMaxDates[1],data,maxYearDataump));
         }
+        lineChartData.push(obj1);
+        lineChartData.push(obj2);
+        lineChartData.push(obj3);
     });
-    return [getTablePredicatedData(data,fvalues,minMaxDates),getData(labels,lineChartData)] ;
+    return [getTablePredicatedData(data,fvalues,minMaxDates),lineChartData] ;
 }
 
 function getTablePredicatedData(data,fvalues,minMaxDates){
@@ -715,5 +794,32 @@ function getTypeOfParam(v) {
     if("lpf") return "Labour Force";
     if("wp") return "Workers";
     if("ump") return "Unemployed Persons";
+}
+
+function otherYearSelTypePresentProjData(fvalues,selYear,decYear,decadedata) {
+    var df = (selYear == 2012 ) ? 6 :(selYear == 2013) ? 22  :diff(selYear,decYear);
+   return (fvalues.geo == 'rural_urban') ? (fvalues.gen == 'person') ? (parseInt(projectedValue(R(decadedata[0]['rural'+'_'+'male'],decadedata[1]['rural'+'_'+'male']).toFixed(3),
+       df,decadedata[1]['rural'+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(decadedata[0]['rural'+'_'+'female'],decadedata[1]['rural'+'_'+'female']).toFixed(3),
+       df,decadedata[1]['rural'+'_'+'female']).toFixed(0)) + parseInt(projectedValue(R(decadedata[0]['urban'+'_'+'male'],decadedata[1]['urban'+'_'+'male']).toFixed(3),
+       df,decadedata[1]['urban'+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(decadedata[0]['urban'+'_'+'female'],decadedata[1]['urban'+'_'+'female']).toFixed(3),
+       df,decadedata[1]['urban'+'_'+'female']).toFixed(0))) : (parseInt(projectedValue(R(decadedata[0]['rural'+'_'+fvalues.gen],decadedata[1]['rural'+'_'+fvalues.gen]).toFixed(3),
+       df,decadedata[1]['rural'+'_'+fvalues.gen]).toFixed(0)) + parseInt(projectedValue(R(decadedata[0]['urban'+'_'+fvalues.gen],decadedata[1]['urban'+'_'+fvalues.gen]).toFixed(3),
+       df,decadedata[1]['urban'+'_'+fvalues.gen]).toFixed(0))) : (fvalues.gen == 'person') ? parseInt(projectedValue(R(decadedata[0][fvalues.geo+'_'+'male'],decadedata[1][fvalues.geo+'_'+'male']).toFixed(3),
+       df,decadedata[1][fvalues.geo+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(decadedata[0][fvalues.geo+'_'+'female'],decadedata[1][fvalues.geo+'_'+'female']).toFixed(3),
+       df,decadedata[1][fvalues.geo+'_'+'female']).toFixed(0)) : parseInt(projectedValue(R(decadedata[0][fvalues.geo+'_'+fvalues.gen],decadedata[1][fvalues.geo+'_'+fvalues.gen]).toFixed(3),
+       df,decadedata[1][fvalues.geo+'_'+fvalues.gen]).toFixed(0));
+}
+
+function futureProjectedVal(fvalues,selYear,decYear,data,maxYearData){
+    return (fvalues.geo == 'rural_urban') ? (fvalues.gen == 'person') ? (parseInt(projectedValue(R(data.decade[0]['rural'+'_'+'male'],data.decade[1]['rural'+'_'+'male']).toFixed(3),
+        diff(selYear,decYear),maxYearData['rural'+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['rural'+'_'+'female'],data.decade[1]['rural'+'_'+'female']).toFixed(3),
+        diff(selYear,decYear),maxYearData['rural'+'_'+'female']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban'+'_'+'male'],data.decade[1]['urban'+'_'+'male']).toFixed(3),
+        diff(selYear,decYear),maxYearData['urban'+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban'+'_'+'female'],data.decade[1]['urban'+'_'+'female']).toFixed(3),
+        diff(selYear,decYear),maxYearData['urban'+'_'+'female']).toFixed(0))) : (parseInt(projectedValue(R(data.decade[0]['rural'+'_'+fvalues.gen],data.decade[1]['rural'+'_'+fvalues.gen]).toFixed(3),
+        diff(selYear,decYear),maxYearData['rural'+'_'+fvalues.gen]).toFixed(0)) + parseInt(projectedValue(R(data.decade[0]['urban'+'_'+fvalues.gen],data.decade[1]['urban'+'_'+fvalues.gen]).toFixed(3),
+        diff(selYear,decYear),maxYearData['urban'+'_'+fvalues.gen]).toFixed(0))) : (fvalues.gen == 'person') ? parseInt(projectedValue(R(data.decade[0][fvalues.geo+'_'+'male'],data.decade[1][fvalues.geo+'_'+'male']).toFixed(3),
+        diff(selYear,decYear),maxYearData[fvalues.geo+'_'+'male']).toFixed(0)) + parseInt(projectedValue(R(data.decade[0][fvalues.geo+'_'+'female'],data.decade[1][fvalues.geo+'_'+'female']).toFixed(3),
+        diff(selYear,decYear),maxYearData[fvalues.geo+'_'+'female']).toFixed(0)) : parseInt(projectedValue(R(data.decade[0][fvalues.geo+'_'+fvalues.gen],data.decade[1][fvalues.geo+'_'+fvalues.gen]).toFixed(3),
+        diff(selYear,decYear),maxYearData[fvalues.geo+'_'+fvalues.gen]).toFixed(0)) ;
 }
 

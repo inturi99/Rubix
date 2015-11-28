@@ -16,8 +16,11 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-header'>PAGES</div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-fontello-gauge' name='Dashboard' href='/app/dashboard' />
+                  <SidebarNavItem glyph='icon-fontello-gauge' name='Population Rate' href='/app/dashboard' />
                   <SidebarNavItem glyph='icon-fontello-gauge' name='Population' href='/app/populationdashboard' />
+                  <SidebarNavItem glyph='icon-fontello-gauge' name='Population1' href='/app/populationdashboard1' />
+                  <SidebarNavItem glyph='icon-fontello-gauge' name='Total Population' href='/app/totalpopulationdashboard' />
+                  <SidebarNavItem glyph='icon-fontello-gauge' name='Total Population1' href='/app/totalpopulationdashboard1' />
                   <SidebarNavItem glyph='icon-feather-mail' name={<span>Mailbox <BLabel className='bg-darkgreen45 fg-white'>3</BLabel></span>}>
                     <SidebarNav>
                       <SidebarNavItem glyph='icon-feather-inbox' name='Inbox' href='/app/mailbox/inbox' />

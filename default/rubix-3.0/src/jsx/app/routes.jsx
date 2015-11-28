@@ -11,7 +11,9 @@ import Mail from 'routes/mail';
 import Compose from 'routes/compose';
 import Calendar from 'routes/calendar';
 import Population from 'routes/population'
-
+import Population1 from 'routes/population1'
+import TotalPopulation from 'routes/totalpopulation'
+import TotalPopulation1 from 'routes/totalpopulation1'
 
 export default (withHistory, onUpdate) => {
   const history = withHistory?
@@ -23,8 +25,11 @@ export default (withHistory, onUpdate) => {
     <Router history={history} onUpdate={onUpdate}>
    <Route path='/' component={Lock} />
    <Route path='/app/lock' component={Lock} />   
-<Route path='/app/dashboard' component={Blank} />
+   <Route path='/app/dashboard' component={Blank} />
         <Route path='/app/populationdashboard' component={Population} />
+        <Route path='/app/populationdashboard1' component={Population1} />
+        <Route path='/app/totalpopulationdashboard' component={TotalPopulation} />
+        <Route path='/app/totalpopulationdashboard1' component={TotalPopulation1} />
 <Route path='/app/login' component={Login} />
 
  <Route path='/app/mailbox/inbox' component={Inbox} />

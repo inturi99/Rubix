@@ -2,16 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab156470-aa7f-47d7-a12e-242a5a0ae510" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population.jsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population1.jsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation.jsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation1.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/colors.css" afterPath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/colors.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/font-faces.css" afterPath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/font-faces.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/main.css" afterPath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/theme.css" afterPath="$PROJECT_DIR$/default/rubix-3.0/public/css/app/raw/ltr/theme.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/public/js/app/app.js" afterPath="$PROJECT_DIR$/default/rubix-3.0/public/js/app/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/public/js/app/app.node.js" afterPath="$PROJECT_DIR$/default/rubix-3.0/public/js/app/app.node.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/forecast.js" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/forecast.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx" afterPath="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx" />
     </list>
@@ -37,7 +41,7 @@
       <file leaf-file-name="population.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.724138">
+            <state vertical-scroll-proportion="0.0">
               <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
               <folding />
             </state>
@@ -47,29 +51,127 @@
       <file leaf-file-name="forecast.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/forecast.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.4385967">
-              <caret line="65" column="33" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="86" column="23" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="populationforecast.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js">
+      <file leaf-file-name="sidebar.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.304837">
-              <caret line="288" column="21" selection-start-line="279" selection-start-column="7" selection-end-line="288" selection-end-column="21" />
+            <state vertical-scroll-proportion="-11.785714">
+              <caret line="22" column="123" selection-start-line="22" selection-start-column="123" selection-end-line="22" selection-end-column="123" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="panels.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/demo/routes/panels.jsx">
+      <file leaf-file-name="routes.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="610" column="52" selection-start-line="610" selection-start-column="29" selection-end-line="610" selection-end-column="52" />
+              <caret line="31" column="80" selection-start-line="31" selection-start-column="80" selection-end-line="31" selection-end-column="80" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="populationforecast.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="129.64285">
+              <caret line="5" column="6" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="6" />
+              <folding>
+                <element signature="n#!!block;n#componentDidMount#0;n#DataTable#0" expanded="false" />
+                <element signature="n#!!block;n#render#0;n#DataTable#0" expanded="false" />
+                <element signature="n#Row#0" expanded="false" />
+                <element signature="n#!!block;n#createDataObj#0" expanded="false" />
+                <element signature="n#!!block;n#barSettings#0" expanded="false" />
+                <element signature="e#24610#24910#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="populationforecast1.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast1.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-38.107143">
+              <caret line="287" column="141" selection-start-line="287" selection-start-column="141" selection-end-line="287" selection-end-column="141" />
+              <folding>
+                <element signature="e#1771#2249#0" expanded="false" />
+                <element signature="n#!!block;n#getLineChartData#0" expanded="false" />
+                <element signature="n#!!block;n#barChartData#0" expanded="false" />
+                <element signature="n#!!block;n#getMinDateAndMaxDateInGivenData#0" expanded="false" />
+                <element signature="n#!!block;n#predictedData#0" expanded="false" />
+                <element signature="n#!!block;n#getTablePredicatedData#0" expanded="false" />
+                <element signature="n#!!block;n#setPersonsAndTotalValues#0" expanded="false" />
+                <element signature="n#!!block;n#getTypeOfParam#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="totalpopulation.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="30" column="62" selection-start-line="30" selection-start-column="57" selection-end-line="30" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="totalpopulationforecast1.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast1.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-23.5">
+              <caret line="349" column="57" selection-start-line="349" selection-start-column="57" selection-end-line="349" selection-end-column="57" />
+              <folding>
+                <element signature="n#!!block;n#componentDidMount#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#handleDataType#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#onChange#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#genderHandle#0;n#PopulationChart#0" expanded="false" />
+                <element signature="e#13213#13333#0" expanded="false" />
+                <element signature="n#!!block;n#getPresentData#0" expanded="false" />
+                <element signature="n#Filter#0" expanded="false" />
+                <element signature="n#ComboBox#0" expanded="false" />
+                <element signature="n#DataTable#0" expanded="false" />
+                <element signature="n#!!block;n#getLineChartData#0" expanded="false" />
+                <element signature="n#!!block;n#barChartData#0" expanded="false" />
+                <element signature="n#!!block;n#getTablePredicatedData#0" expanded="false" />
+                <element signature="n#!!block;n#setPersonsAndTotalValues#0" expanded="false" />
+                <element signature="n#!!block;n#otherYearSelTypePresentProjData#0" expanded="false" />
+                <element signature="n#!!block;n#futureProjectedVal#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="totalpopulation1.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation1.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="62" selection-start-line="7" selection-start-column="62" selection-end-line="7" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="totalpopulationforecast.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.1856018">
+              <caret line="302" column="16" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="16" />
+              <folding>
+                <element signature="n#!!block;n#componentDidMount#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#handleDataType#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#onChange#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#genderHandle#0;n#PopulationChart#0" expanded="false" />
+                <element signature="n#!!block;n#getFilterValues#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,11 +193,17 @@
       <list>
         <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/blank.jsx" />
         <option value="$PROJECT_DIR$/default/rubix-3.0/src/sass/app/pages/_pages.scss" />
-        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx" />
-        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx" />
         <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population.jsx" />
         <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/forecast.js" />
         <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population1.jsx" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast1.js" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation.jsx" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation1.jsx" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast1.js" />
+        <option value="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast.js" />
       </list>
     </option>
   </component>
@@ -106,7 +214,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="27" />
-    <option name="width" value="1920" />
+    <option name="width" value="1826" />
     <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -134,8 +242,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -217,44 +323,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jsx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Rubix" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Rubix" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rubix-3.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -358,6 +426,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -368,8 +438,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common" />
       <recent name="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes" />
+      <recent name="$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common" />
     </key>
   </component>
   <component name="RunManager">
@@ -436,10 +506,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
+    <frame x="0" y="27" width="1826" height="1053" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29166666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23110624" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -452,7 +522,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -470,27 +540,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="42" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/forecast.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -546,7 +600,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -610,7 +663,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33255813">
           <caret line="11059" column="145" selection-start-line="11059" selection-start-column="139" selection-end-line="11059" selection-end-column="145" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -618,9 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5399325">
           <caret line="167" column="81" selection-start-line="167" selection-start-column="62" selection-end-line="167" selection-end-column="81" />
-          <folding>
-            <element signature="e#80#88#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -642,7 +691,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.1101418">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -657,7 +705,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -773,49 +820,136 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3925845">
-          <caret line="36" column="1" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42529988">
-          <caret line="26" column="45" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.724138">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/demo/routes/panels.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="610" column="52" selection-start-line="610" selection-start-column="29" selection-end-line="610" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/forecast.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4385967">
-          <caret line="65" column="33" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="23" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/population1.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.016357688">
+          <caret line="7" column="57" selection-start-line="7" selection-start-column="57" selection-end-line="7" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.304837">
-          <caret line="288" column="21" selection-start-line="279" selection-start-column="7" selection-end-line="288" selection-end-column="21" />
+        <state vertical-scroll-proportion="129.64285">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="6" />
+          <folding>
+            <element signature="n#!!block;n#componentDidMount#0;n#DataTable#0" expanded="false" />
+            <element signature="n#!!block;n#render#0;n#DataTable#0" expanded="false" />
+            <element signature="n#Row#0" expanded="false" />
+            <element signature="n#!!block;n#createDataObj#0" expanded="false" />
+            <element signature="n#!!block;n#barSettings#0" expanded="false" />
+            <element signature="e#24610#24910#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="62" selection-start-line="30" selection-start-column="57" selection-end-line="30" selection-end-column="62" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/populationforecast1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-38.107143">
+          <caret line="287" column="141" selection-start-line="287" selection-start-column="141" selection-end-line="287" selection-end-column="141" />
+          <folding>
+            <element signature="e#1771#2249#0" expanded="false" />
+            <element signature="n#!!block;n#getLineChartData#0" expanded="false" />
+            <element signature="n#!!block;n#barChartData#0" expanded="false" />
+            <element signature="n#!!block;n#getMinDateAndMaxDateInGivenData#0" expanded="false" />
+            <element signature="n#!!block;n#predictedData#0" expanded="false" />
+            <element signature="n#!!block;n#getTablePredicatedData#0" expanded="false" />
+            <element signature="n#!!block;n#setPersonsAndTotalValues#0" expanded="false" />
+            <element signature="n#!!block;n#getTypeOfParam#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="80" selection-start-line="31" selection-start-column="80" selection-end-line="31" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/sidebar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.785714">
+          <caret line="22" column="123" selection-start-line="22" selection-start-column="123" selection-end-line="22" selection-end-column="123" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/routes/totalpopulation1.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="62" selection-start-line="7" selection-start-column="62" selection-end-line="7" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.5">
+          <caret line="349" column="57" selection-start-line="349" selection-start-column="57" selection-end-line="349" selection-end-column="57" />
+          <folding>
+            <element signature="n#!!block;n#componentDidMount#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#handleDataType#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#onChange#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#genderHandle#0;n#PopulationChart#0" expanded="false" />
+            <element signature="e#13213#13333#0" expanded="false" />
+            <element signature="n#!!block;n#getPresentData#0" expanded="false" />
+            <element signature="n#Filter#0" expanded="false" />
+            <element signature="n#ComboBox#0" expanded="false" />
+            <element signature="n#DataTable#0" expanded="false" />
+            <element signature="n#!!block;n#getLineChartData#0" expanded="false" />
+            <element signature="n#!!block;n#barChartData#0" expanded="false" />
+            <element signature="n#!!block;n#getTablePredicatedData#0" expanded="false" />
+            <element signature="n#!!block;n#setPersonsAndTotalValues#0" expanded="false" />
+            <element signature="n#!!block;n#otherYearSelTypePresentProjData#0" expanded="false" />
+            <element signature="n#!!block;n#futureProjectedVal#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/default/rubix-3.0/src/jsx/app/common/totalpopulationforecast.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1856018">
+          <caret line="302" column="16" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!block;n#componentDidMount#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#handleDataType#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#onChange#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#genderHandle#0;n#PopulationChart#0" expanded="false" />
+            <element signature="n#!!block;n#getFilterValues#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
