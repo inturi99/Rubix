@@ -93,7 +93,7 @@ var barOptions = {barValueSpacing:20,barDatasetSpacing : 4,showTooltips:false,
             });
         })
     }};
-
+var url1 = "http://localhost:8091/all1";
 export class PopulationChart extends Component {
     constructor(props) {
         super(props);
@@ -104,7 +104,7 @@ export class PopulationChart extends Component {
         $('#dates').val(2014);
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all1",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -146,7 +146,7 @@ export class PopulationChart extends Component {
     handleDataType(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all1",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -188,7 +188,7 @@ export class PopulationChart extends Component {
     onChange(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all1",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -230,7 +230,7 @@ export class PopulationChart extends Component {
     genderHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all1",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -272,7 +272,7 @@ export class PopulationChart extends Component {
     geoHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all1",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -346,8 +346,8 @@ export class PopulationChart extends Component {
         <PanelBody>
         <h5 className="side" style={{color:"rgb(206,43,199)"}}>Total Population</h5>
         <h5 className="side" style={{color:"rgb(128,170,212)"}}> Labour Force Population </h5>
-        <h5 className="side" style={{color:"rgb(238,104,47)"}}>: Workers Population  </h5>
-        <h5 className="side" style={{color:"rgb(34,210,63)"}}>: Unemployed Persons </h5>
+        <h5 className="side" style={{color:"rgb(238,104,47)"}}> Workers Population  </h5>
+        <h5 className="side" style={{color:"rgb(34,210,63)"}}>  Unemployed Persons </h5>
         <Line id="chart" data={this.state.data} options={options}  style={{"height" : "500px", "width" : "100%"}}
          margin="10" redraw></Line>
         </PanelBody>

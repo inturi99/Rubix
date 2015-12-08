@@ -66,7 +66,7 @@ var barOptions = {barValueSpacing:20,barDatasetSpacing : 4,showTooltips:false,
             });
         })
     }};
-
+var url1 = "http://localhost:8091/all";
 export class PopulationChart extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +76,7 @@ export class PopulationChart extends Component {
         $('#dates').val(2014);
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -112,7 +112,7 @@ export class PopulationChart extends Component {
     handleDataType(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -149,7 +149,7 @@ export class PopulationChart extends Component {
     onChange(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -185,7 +185,7 @@ export class PopulationChart extends Component {
     genderHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -221,7 +221,7 @@ export class PopulationChart extends Component {
     geoHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: "http://localhost:8091/all",
+            url: url1,
             dataType: 'json',
             success: function (data) {
                 var arr = [];
@@ -285,7 +285,7 @@ export class PopulationChart extends Component {
         </PanelHeader>
         <PanelBody style={{padding:10}}>
 
-    <input type='text' value={this.state.knobvalue} className='dial autosize' data-width='150%' data-fgcolor='#498bcb' disabled />
+    <input type='text' value={this.state.knobvalue} className='dial autosize' data-width='150%' data-fgcolor='#498bcb' disabled  data-min="60000000" data-max='100000000' />
         </PanelBody>
         </PanelRight>
         </Panel>

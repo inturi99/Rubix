@@ -79,6 +79,8 @@ var baroptions = {barValueSpacing:20,showTooltips:false,
     })
   }};
 
+var url1 = "http://localhost:8091/";
+
 export class LineChart extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +92,7 @@ export class LineChart extends Component {
     var fvalues = getFilterValues(this.props.type);
     if(fvalues.year > 0) {
       $.ajax({
-        url: "http://localhost:8091/"+getChartType(fvalues.type),
+        url: url1 + getChartType(fvalues.type),
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -112,7 +114,7 @@ export class LineChart extends Component {
     var fvalues = getFilterValues(this.props.type);
     if(fvalues.year > 0) {
       $.ajax({
-        url: "http://localhost:8091/"+getChartType(fvalues.type),
+        url: url1 + getChartType(fvalues.type),
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -134,7 +136,7 @@ export class LineChart extends Component {
     var fvalues = getFilterValues(this.props.type);
     if(fvalues.year > 0) {
       $.ajax({
-        url: "http://localhost:8091/"+getChartType(fvalues.type),
+        url: url1 + getChartType(fvalues.type),
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -156,7 +158,7 @@ export class LineChart extends Component {
     var fvalues = getFilterValues(this.props.type);
     if(fvalues.year > 0) {
       $.ajax({
-        url: "http://localhost:8091/"+getChartType(fvalues.type),
+        url: url1 + getChartType(fvalues.type),
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -178,7 +180,7 @@ export class LineChart extends Component {
     var fvalues = getFilterValues(this.props.type);
     if(fvalues.year > 0) {
       $.ajax({
-        url: "http://localhost:8091/"+getChartType(fvalues.type),
+        url: url1 + getChartType(fvalues.type),
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -200,7 +202,7 @@ export class LineChart extends Component {
     var fvalues = getFilterValues(this.props.type);
     if(fvalues.year > 0) {
       $.ajax({
-        url: "http://localhost:8091/"+getChartType(fvalues.type),
+        url: url1 + getChartType(fvalues.type),
         dataType: 'json',
         cache: false,
         success: function (data) {
@@ -567,13 +569,13 @@ export class Row extends Component {
 
 function getChartType(chartType) {
   switch (chartType){
-    case "labour-rate":
+    case "Labour Force Participation Rate":
       return "lfpr";
       break;
-    case "worker-population":
+    case "Worker Population":
       return "wpr";
       break;
-    case "unemployment-rate":
+    case "Unemployment Rate":
       return "umr";
       break;
     default:
