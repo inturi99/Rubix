@@ -12,6 +12,8 @@ import Compose from 'routes/compose';
 import Calendar from 'routes/calendar';
 import Population from 'routes/population'
 import Population1 from 'routes/population1'
+import Population2 from 'routes/population2'
+import Population3 from 'routes/population3'
 import TotalPopulation from 'routes/totalpopulation'
 import TotalPopulation1 from 'routes/totalpopulation1'
 
@@ -30,6 +32,8 @@ export default (withHistory, onUpdate) => {
         <Route path='/app/populationdashboard1' component={Population1} />
         <Route path='/app/totalpopulationdashboard' component={TotalPopulation} />
         <Route path='/app/totalpopulationdashboard1' component={TotalPopulation1} />
+        <Route path='/app/totalpopulationdashboard2' component={TotalPopulation2} />
+        <Route path='/app/totalpopulationdashboard3' component={TotalPopulation3} />
 <Route path='/app/login' component={Login} />
 
  <Route path='/app/mailbox/inbox' component={Inbox} />
