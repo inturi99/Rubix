@@ -25,7 +25,7 @@ class Body extends React.Component {
 <TabContent>
 <TabPane>
 
-<LineChart bdata={{labels: ["rural","urban","rural_urban"],datasets: [{}]}} type={"labour-rate"} title={"Labour Force Participation Rate"}  data={{
+<LineChart bdata={{labels: ["rural","urban","rural_urban"],datasets: [{}]}} type={"Labour Force Participation Rate"} title={"Labour Force Participation Rate"}  data={{
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [{}]}}/>
 
@@ -36,7 +36,7 @@ class Body extends React.Component {
     datasets: [
         {}
     ]
-}} type={"worker-population"} title={"Worker Population Ratio"}  data={{
+}} type={"Worker Population"} title={"Worker Population Ratio"}  data={{
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [{}]}}/>
 </TabPane>
@@ -46,7 +46,7 @@ class Body extends React.Component {
     datasets: [
         {}
     ]
-}} type={"unemployment-rate"} title={"Unemployment Rate"}  data={{
+}} type={"Unemployment Rate"} title={"Unemployment Rate"}  data={{
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [{}]}}/>
 </TabPane>
@@ -56,7 +56,7 @@ class Body extends React.Component {
     datasets: [
         {}
     ]
-}} type={"proportion-unemployment"} title={"Proportion Unemployed"} data={{
+}} type={"Proportion Unemployment"} title={"Proportion Unemployed"} data={{
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [{}]}}/>
 </TabPane>
