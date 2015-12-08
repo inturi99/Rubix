@@ -12,10 +12,11 @@ import Compose from 'routes/compose';
 import Calendar from 'routes/calendar';
 import Population from 'routes/population'
 import Population1 from 'routes/population1'
-import Population2 from 'routes/population2'
-import Population3 from 'routes/population3'
 import TotalPopulation from 'routes/totalpopulation'
 import TotalPopulation1 from 'routes/totalpopulation1'
+import TotalPopulation2 from 'routes/totalpopulation2'
+import TotalPopulation3 from 'routes/totalpopulation3'
+
 
 export default (withHistory, onUpdate) => {
   const history = withHistory?
