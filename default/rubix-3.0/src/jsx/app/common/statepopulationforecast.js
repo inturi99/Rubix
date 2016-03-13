@@ -73,35 +73,15 @@ export class PopulationChart extends Component {
         this.state = {data: props.data,tdata:[],bdata:props.bdata,knobvalue:0};
     }
     componentDidMount() {
-        $('#dates').val(2014);
+        $('#dates').val(2012);
         var fvalues = getFilterValues();
         $.ajax({
-            url: url1,
+            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
             dataType: 'json',
             success: function (data) {
-                var arr = [];
-                var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
-                var opData;
-                if(fvalues.year <= minandmaxdatadates[1]) {
-                    var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    lpf.paramType = "Labour Force";
-                    arr.push(lpf);
-                    var wp = _.filter(data.wp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    wp.paramType= "Workers";
-                    arr.push(wp);
-                    var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    ump.paramType = "Unemployed Persons";
-                    arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
-                }
-                else {
-                    var years = genYears(fvalues.year,minandmaxdatadates[0]);
-                    years.push(parseInt(fvalues.year));
-                    var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
-                }
-
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
+                    knobvalue:data.lcdata[0].lfpr,bdata:barChartData(data.bardata)});
+               // this.setState({tdata:opData[0],data:getData(data.map(function(o){ return o.year.toString;}),data.map(function(o){ return o.lfpr;})),c:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -149,32 +129,11 @@ export class PopulationChart extends Component {
     onChange(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: url1,
+            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
             dataType: 'json',
             success: function (data) {
-                var arr = [];
-                var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
-                var opData;
-                if(fvalues.year <= minandmaxdatadates[1]) {
-                    var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    lpf.paramType = "Labour Force";
-                    arr.push(lpf);
-                    var wp = _.filter(data.wp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    wp.paramType= "Workers";
-                    arr.push(wp);
-                    var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    ump.paramType = "Unemployed Persons";
-                    arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
-                }
-                else {
-                    var years = genYears(fvalues.year,minandmaxdatadates[0]);
-                    years.push(parseInt(fvalues.year));
-                    var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
-                }
-
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0].lfpr,bdata:barChartData(data.bardata)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -185,32 +144,11 @@ export class PopulationChart extends Component {
     genderHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: url1,
+            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
             dataType: 'json',
             success: function (data) {
-                var arr = [];
-                var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
-                var opData;
-                if(fvalues.year <= minandmaxdatadates[1]) {
-                    var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    lpf.paramType = "Labour Force";
-                    arr.push(lpf);
-                    var wp = _.filter(data.wp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    wp.paramType= "Workers";
-                    arr.push(wp);
-                    var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    ump.paramType = "Unemployed Persons";
-                    arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
-                }
-                else {
-                    var years = genYears(fvalues.year,minandmaxdatadates[0]);
-                    years.push(parseInt(fvalues.year));
-                    var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
-                }
-
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0].lfpr,bdata:barChartData(data.bardata)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -218,36 +156,14 @@ export class PopulationChart extends Component {
             }.bind(this)
         });
     }
-    geoHandle(){
+    stateHandle(){
         var fvalues = getFilterValues();
         $.ajax({
-            url: url1,
+            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
             dataType: 'json',
             success: function (data) {
-                var arr = [];
-                var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
-                var opData;
-                if(fvalues.year <= minandmaxdatadates[1]) {
-                    var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    lpf.paramType = "Labour Force";
-                    arr.push(lpf);
-                    var wp = _.filter(data.wp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    wp.paramType= "Workers";
-                    arr.push(wp);
-                    var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    ump.paramType = "Unemployed Persons";
-                    arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    console.log(opData[0]);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
-                }
-                else {
-                    var years = genYears(fvalues.year,minandmaxdatadates[0]);
-                    years.push(parseInt(fvalues.year));
-                    var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0]),knobvalue:preData[1].datasets[0].data[preData[1].datasets[0].data.length-1]});
-                }
-
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0].lfpr,bdata:barChartData(data.bardata)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -267,13 +183,16 @@ export class PopulationChart extends Component {
             <h4>Labour Force Parameters</h4>
         </PanelHeader>
         <PanelBody style={{padding:10}}>
-            <Filter handleDataType={this.handleDataType.bind(this)}
+          <div>
+            State: <StateComboBox  data={this.state.data} onChange={this.stateHandle.bind(this)}></StateComboBox>
+          </div>
+        <Filter handleDataType={this.handleDataType.bind(this)}
         data={this.state.data} tdata={this.state.tdata}
-        genderHandle={this.genderHandle.bind(this)} geoHandle={this.geoHandle.bind(this)}></Filter>
+        genderHandle={this.genderHandle.bind(this)}></Filter>
         <FormGroup>
         <Label>Year</Label>
         <div>
-        <ComboBox dates={yearsData(2012,2030)} onChange={this.onChange.bind(this)} tdata={this.state.tabledata}></ComboBox>
+        <ComboBox dates={yearsData(2012,2026)} onChange={this.onChange.bind(this)} tdata={this.state.tabledata}></ComboBox>
         </div>
         </FormGroup>
         </PanelBody>
@@ -346,6 +265,7 @@ export class PopulationChart extends Component {
 
 
 
+
 function getPresentData(data,decadeData,selYear,allYearsData,fvalues) {
     var df = (selYear == 2012 ) ? 6 :(selYear == 2013) ? 22  :diff(selYear,decadeData[1].year);
     var obj = {paramType: "Projected Population as on 1'st march "+selYear};
@@ -371,41 +291,14 @@ export class Filter extends Component {
             <FormGroup>
             <Label>Gender</Label>
             <div>
-            <Radio inline id= "male" value='option1' name="gen"  onClick={this.props.genderHandle.bind(this)}>
+            <Radio inline id= "1" value='option1' name="gen"  onClick={this.props.genderHandle.bind(this)}>
         Male
         </Radio>
-        <Radio inline id="female"  value='option2'  name="gen" onClick={this.props.genderHandle.bind(this)}>
+        <Radio inline id="2"  value='option2'  name="gen" onClick={this.props.genderHandle.bind(this)}>
         Female
         </Radio>
-        <Radio inline id="person"  value='option3' defaultChecked name="gen" onClick={this.props.genderHandle.bind(this)}>
+        <Radio inline id="3"  value='option3' defaultChecked name="gen" onClick={this.props.genderHandle.bind(this)}>
         Person
-        </Radio>
-        </div>
-        </FormGroup>
-
-
-        <FormGroup>
-        <Label>Category</Label>
-        <div>
-        <Radio inline  id="rural" value='option1' name="geo"  onClick={this.props.geoHandle.bind(this)}>
-        RURAL
-        </Radio>
-        <Radio inline id="urban"  value='option2'  name="geo" onClick={this.props.geoHandle.bind(this)}>
-        URBAN
-        </Radio>
-        <Radio inline id="rural_urban"  value='option3' defaultChecked  name="geo" onClick={this.props.geoHandle.bind(this)}>
-        RURAL+URBAN
-        </Radio>
-        </div>
-        </FormGroup>
-        <FormGroup>
-        <Label>Approach</Label>
-        <div>
-        <Radio inline  id="UPS" value='option1' defaultChecked name="datatype"  onClick={this.props.handleDataType.bind(this)}>
-        UPS
-        </Radio>
-        <Radio inline id="UPSS"  value='option2'  name="datatype" onClick={this.props.handleDataType.bind(this)}>
-        UPSS
         </Radio>
         </div>
         </FormGroup>
@@ -423,6 +316,20 @@ export class ComboBox extends Component{
         return (<select id="dates" onChange={this.props.onChange.bind(this)}>{optionsarray}</select>);
     }
 }
+
+export class StateComboBox extends Component{
+    render(){
+        var stdata = ["AndhraPradesh","ArunachalPradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","HimachalPradesh","Jammu&Kashmir","Jharkhand","Karnataka","Kerala","MadhyaPradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Orissa","Punjab","Rajasthan","Sikkim","TamilNadu","Tripura","Uttarakhand","UttarPradesh","WestBengal","A&NIslands","Chandigarh","Dadra&NagarHaveli","Daman&Diu","Lakshadweep","Puducherry"];
+        var optionsarray = stdata.map(function(d){
+            return <option key={d}  value={d}>{d}</option>
+        });
+        return (<select id="states" onChange={this.props.onChange.bind(this)}>{optionsarray}</select>);
+    }
+}
+
+
+
+
 
 export class DataTable extends Component {
 
@@ -498,22 +405,12 @@ export class DataTable extends Component {
 
         <Table striped bordered className='tablesaw'>
             <thead>
-            <th>Social Group</th>
-        <th colSpan={3}>Rural</th>
-            <th  colSpan={3}>Urban</th>
-            <th  colSpan={3}>Rural+Urban</th>
             <tr>
-            <th ></th>
-            <th>Male</th>
-            <th>Female</th>
-            <th >Person</th>
-            <th>Male</th>
-            <th>Female</th>
-            <th>Person</th>
-            <th>Male</th>
-            <th>Female</th>
-            <th>Person</th>
-            </tr>
+            <th>Year</th>
+            <th>Population 15 years and above ('000)</th>
+            <th>Labour Force participation rate per 1000 households</th>
+            <th>Labour force population ('000)</th>
+        </tr>
             </thead>
             <tbody>
 
@@ -536,16 +433,10 @@ export class Row extends Component {
     render(){
         var d = this.props.data;
         return (<tr>
-            <td>{d.paramType}</td>
-        <td><p className="dataCell">{d.rural_male}</p></td>
-        <td><p className="dataCell">{d.rural_female}</p></td>
-        <td><p className="dataCell">{d.rural_person}</p></td>
-        <td><p className="dataCell">{d.urban_male}</p></td>
-        <td><p className="dataCell">{d.urban_female}</p></td>
-        <td><p className="dataCell">{d.urban_person}</p></td>
-        <td><p className="dataCell">{d.rural_urban_male}</p></td>
-        <td><p className="dataCell">{d.rural_urban_female}</p></td>
-        <td><p className="dataCell">{d.rural_urban_person}</p></td>
+            <td>{d.year}</td>
+        <td><p className="dataCell">{d.statepop}</p></td>
+        <td><p className="dataCell">{d.lfpr}</p></td>
+        <td><p className="dataCell">{d.lfprpop}</p></td>
         </tr>);
     }
 }
@@ -564,9 +455,9 @@ function createDataObj(csettings, data) {
 
 function barSettings() {
     return {
-        "Labour Force-person": ["SC-Person", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)"],
-        "Workers-person": ["ST-Person", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)"],
-        "Unemployed Persons-person": ["OBC-Person", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)"],
+        "Male": ["Male", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)", "rgba(190,186,218,0.5)"],
+        "Female": ["Female", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)", "rgb(253,180,98)"],
+        "Person": ["Person", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)", "rgb(217,217,217)"],
         "Labour Force-male":["SC-Male", "rgb(141,211,199)", "rgb(141,211,199)", "rgb(141,211,199)", "rgb(141,211,199)"],
         "Labour Force-female":["SC-Female","rgb(251,180,174)", "rgb(251,180,174)", "rgb(251,180,174)", "rgb(251,180,174)"],
         "Workers-male":["ST-Male","rgb(251,128,114)", "rgb(251,128,114) ", "rgb(251,128,114) ", "rgb(251,128,114)"],
@@ -600,11 +491,10 @@ function genYears(selyear,min) {
 
 function getFilterValues() {
     var Gen = $('input[name=gen]:checked')[0];
-    var Types = $('input[name=charttype]:checked')[0];
+    //var Types = $('input[name=charttype]:checked')[0];
     return {
-        gen: [Gen.id],
-        geo:$('input[name=geo]:checked')[0].id,
-        datatype: $('input[name=datatype]:checked')[0].id,
+        gen: Gen.id,
+        state: $('#states').val(),
         year: $('#dates').val()
     };
 }
@@ -619,25 +509,35 @@ function getLineChartData(previousData,fvalues) {
     return [labels,axisData];
 }
 
-function barChartData(data) {
-    var datasets = [];
-    var bsettings = barSettings();
-    var labels = ["rural","urban","rural_urban"];
-    var paramTypes =  ["Labour Force","Workers","Unemployed Persons"];
-    var gen = ["male","female","person"]
-    _.each(paramTypes,function(p){
-        var catobj = _.find(data, function (x) { return x.paramType == p; });
-        _.each(gen,function(g){
-            var data = [];
-            _.each(labels,function(l){
-                data.push(catobj[l+"_"+g]);
-            });
-            datasets.push(createDataObj(bsettings[p+'-'+g],data));
-        });
-    });
+    function barChartData(data) {
     return {
-        labels: labels,
-        datasets: datasets
+        labels:["Gender"] ,
+        datasets: [
+        {
+            label: "Male",
+            fillColor: "rgba(190,186,218,0.5)",
+            strokeColor: "rgba(190,186,218,0.5)",
+            highlightFill: "rgba(190,186,218,0.5)",
+            highlightStroke: "rgba(190,186,218,0.5)",
+            data: [data.filter(function(o){return o.gender == 1;})[0].lfpr]
+        },
+        {
+            label: "Female",
+            fillColor: "rgb(253,180,98)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [data.filter(function(o){return o.gender == 2;})[0].lfpr]
+        },
+            {
+                label: "Person",
+                fillColor: "rgb(217,217,217)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [data.filter(function(o){return o.gender == 3;})[0].lfpr]
+            }
+    ]
     };
 }
 function getMinDateAndMaxDateInGivenData(data){
