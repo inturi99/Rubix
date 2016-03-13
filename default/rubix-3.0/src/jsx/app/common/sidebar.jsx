@@ -17,6 +17,7 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-fontello-gauge' name='Population Rate' href='/app/dashboard' />
+                    <SidebarNavItem glyph='icon-fontello-gauge' name='State Population' href='/app/statepopulationdashboard' />
                   <SidebarNavItem glyph='icon-fontello-gauge' name='Population (NSSO)' href='/app/populationdashboard' />
                   <SidebarNavItem glyph='icon-fontello-gauge' name='Population(NCP)' href='/app/populationdashboard1' />
                   <SidebarNavItem glyph='icon-fontello-gauge' name='TotalPopulation' href='/app/totalpopulationdashboard' />
