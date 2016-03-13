@@ -200,7 +200,7 @@ export class PopulationChart extends Component {
         <PanelRight className='col-xs-6 text-center'>
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Population</h4>
+            <h4>Labour Froce Participation Rate Per 1000 Households</h4>
         </PanelHeader>
         <PanelBody style={{padding:10}}>
 
@@ -239,15 +239,6 @@ export class PopulationChart extends Component {
     <h6 className="side" style={{color:"rgb(141,211,199)"}}> LF-MALE </h6>
         <h6 className="side" style={{color:"rgb(251,180,174)"}}>: LF-FEMALE </h6>
         <h6 className="side" style={{color:"rgb(190,186,218)"}}>: LF-PERSON </h6>
-
-        <h6 className="side" style={{color:"rgb(251,128,114)"}}>: WP-MALE  </h6>
-        <h6 className="side" style={{color:"rgb(128,177,211)"}}>: WP-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(253,180,98)"}}>: WP-PERSON </h6>
-
-        <h6 className="side" style={{color:"rgb(179,222,105)"}}>: UMP-MALE </h6>
-        <h6 className="side" style={{color:"rgb(252,205,229)"}}>: UMP-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(217,217,217)"}}>: UMP-PERSON </h6>
-
 
 
         <Bar id="bchart" data={this.state.bdata} options={barOptions}  style={{"height":"250px" , "width" : "100%"}} redraw>
@@ -616,4 +607,3 @@ function getTypeOfParam(v) {
     if("wp") return "Workers";
     if("ump") return "Unemployed Persons";
 }
-
