@@ -238,7 +238,7 @@ export class PopulationChart extends Component {
         <style type="text/css" dangerouslySetInnerHTML={{__html: "\n<!--\n.side { vertical-align:absbottom; display:inline }\n-->\n" }} />
     <h6 className="side" style={{color:"rgb(141,211,199)"}}> LF-MALE </h6>
         <h6 className="side" style={{color:"rgb(251,180,174)"}}>: LF-FEMALE </h6>
-        <h6 className="side" style={{color:"rgb(190,186,218)"}}>: LF-PERSON </h6>
+        <h6 className="side" style={{color:"rgb(128,177,211)"}}>: LF-PERSON </h6>
 
 
         <Bar id="bchart" data={this.state.bdata} options={barOptions}  style={{"height":"250px" , "width" : "100%"}} redraw>
@@ -506,26 +506,26 @@ function getLineChartData(previousData,fvalues) {
         datasets: [
         {
             label: "Male",
-            fillColor: "rgba(190,186,218,0.5)",
-            strokeColor: "rgba(190,186,218,0.5)",
-            highlightFill: "rgba(190,186,218,0.5)",
-            highlightStroke: "rgba(190,186,218,0.5)",
+            fillColor: "rgb(141,211,199)",
+            strokeColor: "rgb(141,211,199)",
+            highlightFill: "rgb(141,211,199)",
+            highlightStroke: "rgb(141,211,199)",
             data: [data.filter(function(o){return o.gender == 1;})[0].lfpr]
         },
         {
             label: "Female",
-            fillColor: "rgb(253,180,98)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
+            fillColor: "rgb(251,180,174)",
+            strokeColor: "rgb(251,180,174)",
+            highlightFill: "rgb(251,180,174)",
+            highlightStroke: "rgb(251,180,174)",
             data: [data.filter(function(o){return o.gender == 2;})[0].lfpr]
         },
             {
                 label: "Person",
-                fillColor: "rgb(217,217,217)",
-                strokeColor: "rgba(151,187,205,0.8)",
-                highlightFill: "rgba(151,187,205,0.75)",
-                highlightStroke: "rgba(151,187,205,1)",
+                fillColor: "rgb(128,177,211)",
+                strokeColor: "rgb(128,177,211)",
+                highlightFill: "rgb(128,177,211)",
+                highlightStroke: "rgb(128,177,211)",
                 data: [data.filter(function(o){return o.gender == 3;})[0].lfpr]
             }
     ]
