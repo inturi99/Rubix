@@ -25,13 +25,13 @@ class Body extends React.Component {
                                 <TabContent>
                                     <TabPane>
 
-                                        <PopulationChart bdata={{labels: ["rural","urban","rural_urban"],datasets: [{}]}} paramType={"lfp"} title={"Labour Force Participation Rate"}  data={{
+                                        <PopulationChart tabc1title={"LABOUR FORCE PARTICIPATION RATE PER 1000 HOUSEHOLDS"} tabc2title={"LABOUR FORCE POPULATION ('000)"} filtitle={"Labour Force"} curl={"statepopulation/lfpr/"} popc={"lfprpop"} cvalprop={"lfpr"} bdata={{labels: ["rural","urban","rural_urban"],datasets: [{}]}} paramType={"lfp"} title={"Labour Force Participation Rate"}  data={{
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [{}]}}/>
 
                                     </TabPane>
                                     <TabPane>
-                                        <PopulationChart bdata={{
+                                        <PopulationChart tabc1title={"WORKER POPULATION RATIO PER 1000 HOUSEHOLDS"} tabc2title={"WORKER POPULATION ('000)"} filtitle={"Worker Population"} curl={"statepopulation/wpr/"} popc={"wprpop"} cvalprop={"wpr"} bdata={{
     labels: ["rural","urban","rural_urban"],
     datasets: [
         {}

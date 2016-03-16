@@ -28,6 +28,7 @@ function yearsData (start,end) {
 }
 
 var labels = ["rural_male","rural_female", "urban_male","urban_female"];
+var host = "http://localhost:8091/";
 function getData(labeldata,dataarray){
     return { labels: labeldata,
         datasets:[
@@ -73,14 +74,15 @@ export class PopulationChart extends Component {
         this.state = {data: props.data,tdata:[],bdata:props.bdata,knobvalue:0};
     }
     componentDidMount() {
-        $('#dates').val(2012);
+        $('#dates').val(2016);
         var fvalues = getFilterValues();
+        var cvalp = this.props.cvalprop;
         $.ajax({
-            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
+            url: host+this.props.curl+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year+"/"+fvalues.type,
             dataType: 'json',
             success: function (data) {
-                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
-                    knobvalue:data.lcdata[0].lfpr,bdata:barChartData(data.bardata)});
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o[cvalp];})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0][cvalp],bdata:barChartData(data.bardata,cvalp)});
                // this.setState({tdata:opData[0],data:getData(data.map(function(o){ return o.year.toString;}),data.map(function(o){ return o.lfpr;})),c:barChartData(arr),knobvalue:opData[1].datasets[0].data[opData[1].datasets[0].data.length-1]});
             }.bind(this),
             error: function (xhr, status, err) {
@@ -91,34 +93,13 @@ export class PopulationChart extends Component {
     }
     handleDataType(){
         var fvalues = getFilterValues();
+        var cvalp = this.props.cvalprop;
         $.ajax({
-            url: url1,
+            url: host+this.props.curl+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year+"/"+fvalues.type,
             dataType: 'json',
             success: function (data) {
-                var arr = [];
-                var minandmaxdatadates = getMinDateAndMaxDateInGivenData(data.lfp.map(function(o){ return o.year;}));
-                var opData;
-                if(fvalues.year <= minandmaxdatadates[1]) {
-                    var lpf =  _.filter(data.lfp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    lpf.paramType = "Labour Force";
-                    arr.push(lpf);
-                    var wp = _.filter(data.wp,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    wp.paramType= "Workers";
-                    arr.push(wp);
-                    var ump = _.filter(data.ump,function(x){ return x.year == fvalues.year && x.type == fvalues.datatype;})[0];
-                    ump.paramType = "Unemployed Persons";
-                    arr.push(ump);
-                    opData = getPresentData(arr,data.decade,fvalues.year,data[this.props.paramType].filter(function(l) { return l.type == "UPS" && l.year <= fvalues.year;}),fvalues);
-                    console.log(opData[0]);
-                    this.setState({tdata:opData[0],data:opData[1],bdata:barChartData(arr)});
-                }
-                else {
-                    var years = genYears(fvalues.year,minandmaxdatadates[0]);
-                    years.push(parseInt(fvalues.year));
-                    var preData  = predictedData(years,data,fvalues,this.props.paramType,minandmaxdatadates)
-                    this.setState({tdata:preData[0],data:preData[1],bdata:barChartData(preData[0])});
-                }
-
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o[cvalp];})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0][cvalp],bdata:barChartData(data.bardata,cvalp)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -128,12 +109,13 @@ export class PopulationChart extends Component {
     }
     onChange(){
         var fvalues = getFilterValues();
+        var cvalp = this.props.cvalprop;
         $.ajax({
-            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
+            url: host+this.props.curl+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year+"/"+fvalues.type,
             dataType: 'json',
             success: function (data) {
-                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
-                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0].lfpr,bdata:barChartData(data.bardata)});
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o[cvalp];})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0][cvalp],bdata:barChartData(data.bardata,cvalp)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -143,12 +125,13 @@ export class PopulationChart extends Component {
     }
     genderHandle(){
         var fvalues = getFilterValues();
+        var cvalp = this.props.cvalprop;
         $.ajax({
-            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
+            url: host+this.props.curl+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year+"/"+fvalues.type,
             dataType: 'json',
             success: function (data) {
-                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
-                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0].lfpr,bdata:barChartData(data.bardata)});
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o[cvalp];})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0][cvalp],bdata:barChartData(data.bardata,cvalp)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -158,12 +141,13 @@ export class PopulationChart extends Component {
     }
     stateHandle(){
         var fvalues = getFilterValues();
+        var cvalp = this.props.cvalprop;
         $.ajax({
-            url: "http://localhost:8091/statepopulation/lfpr/"+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year,
+            url: host+this.props.curl+fvalues.state+"/"+fvalues.gen+"/"+fvalues.year+"/"+fvalues.type,
             dataType: 'json',
             success: function (data) {
-                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o.lfpr;})),
-                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0].lfpr,bdata:barChartData(data.bardata)});
+                this.setState({tdata:data.lcdata.filter(function(o){return o.year == fvalues.year;}),data:getData(data.lcdata.map(function(o){ return o.year.toString();}),data.lcdata.map(function(o){ return o[cvalp];})),
+                    knobvalue:data.lcdata.filter(function(o){return o.year == fvalues.year;})[0][cvalp],bdata:barChartData(data.bardata,cvalp)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(xhr);
@@ -180,7 +164,7 @@ export class PopulationChart extends Component {
             <PanelLeft className='col-xs-6'>
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Labour Force Parameters</h4>
+            <h4>{this.props.filtitle} Parameters</h4>
         </PanelHeader>
         <PanelBody style={{padding:10}}>
           <div>
@@ -200,7 +184,7 @@ export class PopulationChart extends Component {
         <PanelRight className='col-xs-6 text-center'>
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Labour Froce Participation Rate Per 1000 Households</h4>
+            <h4>{this.props.title} Per 1000 Households</h4>
         </PanelHeader>
         <PanelBody style={{padding:10}}>
 
@@ -213,7 +197,7 @@ export class PopulationChart extends Component {
             <Panel>
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Labour Force Parameter Trend</h4>
+            <h4>{this.props.filtitle} Parameter Trend</h4>
 
         </PanelHeader>
         <PanelBody>
@@ -229,7 +213,7 @@ export class PopulationChart extends Component {
             <Panel>
             <PanelHeader className='bg-orange75 fg-white center text-center'>
 
-            <h4>Comparative Labour Force Parameters</h4>
+            <h4>Comparative {this.props.filtitle} Parameters</h4>
 
         </PanelHeader>
         <PanelBody>
@@ -247,7 +231,7 @@ export class PopulationChart extends Component {
         </Panel>
         </PanelContainer>
 
-            <DataTable tabledata={this.state.tdata}></DataTable>
+            <DataTable tabc1title={this.props.tabc1title} tabc2title={this.props.tabc2title} tabledata={this.state.tdata} cval={this.props.cvalprop} popc={this.props.popc}></DataTable>
         </Container>
     );
     }
@@ -290,6 +274,17 @@ export class Filter extends Component {
         </Radio>
         <Radio inline id="3"  value='option3' defaultChecked name="gen" onClick={this.props.genderHandle.bind(this)}>
         Person
+        </Radio>
+        </div>
+        </FormGroup>
+        <FormGroup>
+        <Label>Type</Label>
+        <div>
+        <Radio inline id= "UPS" defaultChecked name="datatype"  onClick={this.props.handleDataType.bind(this)}>
+        UPS
+        </Radio>
+        <Radio inline id="UPSS"    name="datatype" onClick={this.props.handleDataType.bind(this)}>
+        UPSS
         </Radio>
         </div>
         </FormGroup>
@@ -382,8 +377,10 @@ export class DataTable extends Component {
     }
     render(){
         var rows = [];
+        var cv = this.props.cval;
+        var pc = this.props.popc;
         this.props.tabledata.forEach(function(dat) {
-            rows.push(<Row data={dat}/>);
+            rows.push(<Row data={dat} cval={cv} popc={pc}/>);
         });
         return (
 
@@ -399,8 +396,8 @@ export class DataTable extends Component {
             <tr>
             <th>Year</th>
             <th>Population 15 years and above ('000)</th>
-            <th>Labour Force participation rate per 1000 households</th>
-            <th>Labour force population ('000)</th>
+            <th>{this.props.tabc1title}</th>
+            <th>{this.props.tabc2title}</th>
         </tr>
             </thead>
             <tbody>
@@ -426,8 +423,8 @@ export class Row extends Component {
         return (<tr>
             <td>{d.year}</td>
         <td><p className="dataCell">{d.statepop}</p></td>
-        <td><p className="dataCell">{d.lfpr}</p></td>
-        <td><p className="dataCell">{d.lfprpop}</p></td>
+        <td><p className="dataCell">{d[this.props.cval]}</p></td>
+        <td><p className="dataCell">{d[this.props.popc]}</p></td>
         </tr>);
     }
 }
@@ -482,11 +479,12 @@ function genYears(selyear,min) {
 
 function getFilterValues() {
     var Gen = $('input[name=gen]:checked')[0];
-    //var Types = $('input[name=charttype]:checked')[0];
+    var Types = $('input[name=datatype]:checked')[0];
     return {
         gen: Gen.id,
         state: $('#states').val(),
-        year: $('#dates').val()
+        year: $('#dates').val(),
+        type:Types.id
     };
 }
 
@@ -500,7 +498,7 @@ function getLineChartData(previousData,fvalues) {
     return [labels,axisData];
 }
 
-    function barChartData(data) {
+    function barChartData(data,prop) {
     return {
         labels:["Gender"] ,
         datasets: [
@@ -510,7 +508,7 @@ function getLineChartData(previousData,fvalues) {
             strokeColor: "rgb(141,211,199)",
             highlightFill: "rgb(141,211,199)",
             highlightStroke: "rgb(141,211,199)",
-            data: [data.filter(function(o){return o.gender == 1;})[0].lfpr]
+            data: [data.filter(function(o){return o.gender == 1;})[0][prop]]
         },
         {
             label: "Female",
@@ -518,7 +516,7 @@ function getLineChartData(previousData,fvalues) {
             strokeColor: "rgb(251,180,174)",
             highlightFill: "rgb(251,180,174)",
             highlightStroke: "rgb(251,180,174)",
-            data: [data.filter(function(o){return o.gender == 2;})[0].lfpr]
+            data: [data.filter(function(o){return o.gender == 2;})[0][prop]]
         },
             {
                 label: "Person",
@@ -526,7 +524,7 @@ function getLineChartData(previousData,fvalues) {
                 strokeColor: "rgb(128,177,211)",
                 highlightFill: "rgb(128,177,211)",
                 highlightStroke: "rgb(128,177,211)",
-                data: [data.filter(function(o){return o.gender == 3;})[0].lfpr]
+                data: [data.filter(function(o){return o.gender == 3;})[0][prop]]
             }
     ]
     };
