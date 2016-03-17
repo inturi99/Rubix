@@ -305,7 +305,7 @@ export class ComboBox extends Component{
 
 export class StateComboBox extends Component{
     render(){
-        var stdata = ["AndhraPradesh","ArunachalPradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","HimachalPradesh","Jammu&Kashmir","Jharkhand","Karnataka","Kerala","MadhyaPradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Orissa","Punjab","Rajasthan","Sikkim","TamilNadu","Tripura","Uttarakhand","UttarPradesh","WestBengal","A&NIslands","Chandigarh","Dadra&NagarHaveli","Daman&Diu","Lakshadweep","Puducherry"];
+        var stdata = ["AllIndia","AndhraPradesh","ArunachalPradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","HimachalPradesh","Jammu&Kashmir","Jharkhand","Karnataka","Kerala","MadhyaPradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","TamilNadu","Tripura","Uttarakhand","UttarPradesh","WestBengal","A&NIslands","Chandigarh","Dadra&NagarHaveli","Daman&Diu","Lakshadweep","Puducherry"];
         var optionsarray = stdata.map(function(d){
             return <option key={d}  value={d}>{d}</option>
         });
