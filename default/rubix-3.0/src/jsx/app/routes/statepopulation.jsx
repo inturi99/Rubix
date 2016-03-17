@@ -20,18 +20,18 @@ class Body extends React.Component {
                                     <Tab pane='tab1' active>Labour Force Population</Tab>
                                     <Tab pane='tab2'>Worker Population</Tab>
                                     <Tab pane='tab3'>Un-Employment Persons</Tab>
-
+                                    <Tab pane='tab3'>Proportional Un-Employed</Tab>
                                 </TabList>
                                 <TabContent>
                                     <TabPane>
 
-                                        <PopulationChart tabc1title={"LABOUR FORCE PARTICIPATION RATE PER 1000 HOUSEHOLDS"} tabc2title={"LABOUR FORCE POPULATION ('000)"} filtitle={"Labour Force"} curl={"statepopulation/lfpr/"} popc={"lfprpop"} cvalprop={"lfpr"} bdata={{labels: ["rural","urban","rural_urban"],datasets: [{}]}} paramType={"lfp"} title={"Labour Force Participation Rate"}  data={{
+                                        <PopulationChart tabc0title={" POPULATION 15 YEARS AND ABOVE ('000)"} tabc1title={"LABOUR FORCE PARTICIPATION RATE PER 1000 HOUSEHOLDS"} tabc2title={"LABOUR FORCE POPULATION ('000)"} filtitle={"Labour Force"} curl={"statepopulation/lfpr/"} popc={"lfprpop"} cvalprop={"lfpr"} bdata={{labels: ["rural","urban","rural_urban"],datasets: [{}]}} paramType={"lfp"} title={"Labour Force Participation Rate"}  data={{
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [{}]}}/>
 
                                     </TabPane>
                                     <TabPane>
-                                        <PopulationChart tabc1title={"WORKER POPULATION RATIO PER 1000 HOUSEHOLDS"} tabc2title={"WORKER POPULATION ('000)"} filtitle={"Worker Population"} curl={"statepopulation/wpr/"} popc={"wprpop"} cvalprop={"wpr"} bdata={{
+                                        <PopulationChart tabc0title={" POPULATION 15 YEARS AND ABOVE ('000)"} tabc1title={"WORKER POPULATION RATIO PER 1000 HOUSEHOLDS"} tabc2title={"WORKER POPULATION ('000)"} filtitle={"Worker Population"} curl={"statepopulation/wpr/"} popc={"wprpop"} cvalprop={"wpr"} bdata={{
     labels: ["rural","urban","rural_urban"],
     datasets: [
         {}
@@ -41,7 +41,17 @@ class Body extends React.Component {
     datasets: [{}]}}/>
                                     </TabPane>
                                     <TabPane>
-                                        <PopulationChart bdata={{
+                                        <PopulationChart tabc0title={"LABOUR FORCE POPULATION"} tabc1title={"UNEMPLOYEMENT RATE"} tabc2title={"UNEMPLOYED PERSONS"} filtitle={"Unemployment"} curl={"statepopulation/ur/"} popc={"unemppersons"} cvalprop={"upr"} bdata={{
+    labels: ["rural","urban","rural_urban"],
+    datasets: [
+        {}
+    ]
+}} paramType={"ump"} title={"Unemployment Rate"}  data={{
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [{}]}}/>
+                                    </TabPane>
+                                    <TabPane>
+                                        <PopulationChart tabc0title={" POPULATION 15 YEARS AND ABOVE ('000)"} tabc1title={"PROPORTIONAL UNEMPLOYED"} tabc2title={"UNEMPLOYED PERSONS"} filtitle={"Unemployment"} curl={"statepopulation/pur/"} popc={"unemppersons"} cvalprop={"pur"} bdata={{
     labels: ["rural","urban","rural_urban"],
     datasets: [
         {}

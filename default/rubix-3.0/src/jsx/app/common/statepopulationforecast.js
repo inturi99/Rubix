@@ -231,7 +231,7 @@ export class PopulationChart extends Component {
         </Panel>
         </PanelContainer>
 
-            <DataTable tabc1title={this.props.tabc1title} tabc2title={this.props.tabc2title} tabledata={this.state.tdata} cval={this.props.cvalprop} popc={this.props.popc}></DataTable>
+            <DataTable tabc0title={this.props.tabc0title} tabc1title={this.props.tabc1title} tabc2title={this.props.tabc2title} tabledata={this.state.tdata} cval={this.props.cvalprop} popc={this.props.popc}></DataTable>
         </Container>
     );
     }
@@ -395,7 +395,7 @@ export class DataTable extends Component {
             <thead>
             <tr>
             <th>Year</th>
-            <th>Population 15 years and above ('000)</th>
+            <th>{this.props.tabc0title}</th>
             <th>{this.props.tabc1title}</th>
             <th>{this.props.tabc2title}</th>
         </tr>
